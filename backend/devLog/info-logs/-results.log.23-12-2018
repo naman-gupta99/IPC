@@ -1,0 +1,82 @@
+{"level":"error"}
+
+{"level":"error"}
+
+{"level":"error"}
+
+{"level":"error"}
+
+{"message":"::1 - - [22/Dec/2018:18:49:52 +0000] \"POST /auth/login HTTP/1.1\" 500 2042 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+
+{"level":"error"}
+
+{"level":"error"}
+
+{"message":"::1 - - [22/Dec/2018:18:50:15 +0000] \"POST /auth/login HTTP/1.1\" 401 68 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+
+{"message":"::1 - - [22/Dec/2018:19:09:12 +0000] \"GET /public/api-docs/index.html HTTP/1.1\" 404 165 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36\"\n","level":"info"}
+
+{"message":"::1 - - [22/Dec/2018:19:09:12 +0000] \"GET /favicon.ico HTTP/1.1\" 404 150 \"http://localhost:8000/public/api-docs/index.html\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36\"\n","level":"info"}
+
+{"message":"::1 - - [22/Dec/2018:19:14:34 +0000] \"GET /public/api-docs/index.html HTTP/1.1\" 404 165 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36\"\n","level":"info"}
+
+{"message":"::1 - - [22/Dec/2018:19:15:29 +0000] \"GET /public/api-docs/index.html HTTP/1.1\" 404 165 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36\"\n","level":"info"}
+
+{"errors":{"name":{"message":"Path `name` is required.","name":"ValidatorError","properties":{"message":"Path `name` is required.","type":"required","path":"name"},"kind":"required","path":"name"}},"_message":"User validation failed","message":"User validation failed: name: Path `name` is required.","name":"ValidationError","level":"error"}
+
+{"errors":{"name":{"message":"Path `name` is required.","name":"ValidatorError","properties":{"message":"Path `name` is required.","type":"required","path":"name"},"kind":"required","path":"name"}},"_message":"User validation failed","message":"User validation failed: name: Path `name` is required.","name":"ValidationError","level":"error"}
+
+{"message":"::1 - - [23/Dec/2018:17:51:05 +0000] \"POST /auth/login HTTP/1.1\" 401 393 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+
+{"message":"::1 - - [23/Dec/2018:17:52:38 +0000] \"POST /auth/login HTTP/1.1\" 500 2055 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+
+{"errors":{"name":{"message":"Path `name` is required.","name":"ValidatorError","properties":{"message":"Path `name` is required.","type":"required","path":"name"},"kind":"required","path":"name"}},"_message":"User validation failed","message":"User validation failed: name: Path `name` is required.","name":"ValidationError","level":"error"}
+
+{"errors":{"name":{"message":"Path `name` is required.","name":"ValidatorError","properties":{"message":"Path `name` is required.","type":"required","path":"name"},"kind":"required","path":"name"}},"_message":"User validation failed","message":"User validation failed: name: Path `name` is required.","name":"ValidationError","level":"error"}
+
+{"message":"::1 - - [23/Dec/2018:17:53:03 +0000] \"POST /auth/login HTTP/1.1\" 401 393 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+
+{"errors":{"name":{"message":"Path `name` is required.","name":"ValidatorError","properties":{"message":"Path `name` is required.","type":"required","path":"name"},"kind":"required","path":"name"}},"_message":"User validation failed","message":"User validation failed: name: Path `name` is required.","name":"ValidationError","level":"error"}
+
+{"errors":{"name":{"message":"Path `name` is required.","name":"ValidatorError","properties":{"message":"Path `name` is required.","type":"required","path":"name"},"kind":"required","path":"name"}},"_message":"User validation failed","message":"User validation failed: name: Path `name` is required.","name":"ValidationError","level":"error"}
+
+{"message":"::1 - - [23/Dec/2018:17:55:07 +0000] \"POST /auth/login HTTP/1.1\" 401 393 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+
+{"errors":{"name":{"message":"Path `name` is required.","name":"ValidatorError","properties":{"message":"Path `name` is required.","type":"required","path":"name"},"kind":"required","path":"name"}},"_message":"User validation failed","message":"User validation failed: name: Path `name` is required.","name":"ValidationError","level":"error"}
+
+{"errors":{"name":{"message":"Path `name` is required.","name":"ValidatorError","properties":{"message":"Path `name` is required.","type":"required","path":"name"},"kind":"required","path":"name"}},"_message":"User validation failed","message":"User validation failed: name: Path `name` is required.","name":"ValidationError","level":"error"}
+
+{"message":"::1 - - [23/Dec/2018:17:56:05 +0000] \"POST /auth/login HTTP/1.1\" 401 393 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+
+{"errors":{"name":{"message":"Path `name` is required.","name":"ValidatorError","properties":{"message":"Path `name` is required.","type":"required","path":"name"},"kind":"required","path":"name"}},"_message":"User validation failed","message":"User validation failed: name: Path `name` is required.","name":"ValidationError","level":"error"}
+
+{"errors":{"name":{"message":"Path `name` is required.","name":"ValidatorError","properties":{"message":"Path `name` is required.","type":"required","path":"name"},"kind":"required","path":"name"}},"_message":"User validation failed","message":"User validation failed: name: Path `name` is required.","name":"ValidationError","level":"error"}
+
+{"message":"::1 - - [23/Dec/2018:17:56:44 +0000] \"POST /auth/login HTTP/1.1\" 401 393 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+
+{"errors":{"name":{"message":"Path `name` is required.","name":"ValidatorError","properties":{"message":"Path `name` is required.","type":"required","path":"name"},"kind":"required","path":"name"}},"_message":"User validation failed","message":"User validation failed: name: Path `name` is required.","name":"ValidationError","level":"error"}
+
+{"errors":{"name":{"message":"Path `name` is required.","name":"ValidatorError","properties":{"message":"Path `name` is required.","type":"required","path":"name"},"kind":"required","path":"name"}},"_message":"User validation failed","message":"User validation failed: name: Path `name` is required.","name":"ValidationError","level":"error"}
+
+{"message":"::1 - - [23/Dec/2018:17:57:50 +0000] \"POST /auth/login HTTP/1.1\" 401 393 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+
+{"message":"::1 - - [23/Dec/2018:17:59:18 +0000] \"POST /auth/login HTTP/1.1\" 200 339 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+
+{"message":"::1 - - [23/Dec/2018:18:04:25 +0000] \"POST /swagger HTTP/1.1\" 404 147 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+
+{"message":"::1 - - [23/Dec/2018:18:04:30 +0000] \"POST /swagger.json HTTP/1.1\" 404 152 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+
+{"message":"::1 - - [23/Dec/2018:18:04:39 +0000] \"GET /swagger.json HTTP/1.1\" 404 151 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+
+{"message":"::1 - - [23/Dec/2018:18:07:03 +0000] \"GET /api-docs/index.html HTTP/1.1\" 404 158 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36\"\n","level":"info"}
+
+{"message":"::1 - - [23/Dec/2018:18:07:03 +0000] \"GET /favicon.ico HTTP/1.1\" 404 150 \"http://localhost:8000/api-docs/index.html\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36\"\n","level":"info"}
+
+{"level":"error"}
+
+{"level":"error"}
+
+{"message":"::1 - - [23/Dec/2018:18:17:36 +0000] \"POST /auth/login HTTP/1.1\" 401 79 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+
+{"message":"::1 - - [23/Dec/2018:18:18:24 +0000] \"POST /auth/login HTTP/1.1\" 200 339 \"-\" \"PostmanRuntime/7.4.0\"\n","level":"info"}
+
