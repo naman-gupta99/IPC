@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OnlineComponent } from './online.component';
+import { ConnectedPageComponent } from './connected-page.component';
 
-describe('OnlineComponent', () => {
-  let component: OnlineComponent;
-  let fixture: ComponentFixture<OnlineComponent>;
+describe('ConnectedPageComponent', () => {
+  let component: ConnectedPageComponent;
+  let fixture: ComponentFixture<ConnectedPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OnlineComponent ]
+      declarations: [ ConnectedPageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OnlineComponent);
+    fixture = TestBed.createComponent(ConnectedPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
