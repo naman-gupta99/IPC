@@ -15,5 +15,9 @@ npm install
 
 * Run the following command in the project directory to run the server in development mode in windows
 ```bash
-npm run server
+npm run server_dev
+```
+* Run the following command in the project directory to run the server in production mode in windows
+```bash
+npm run server_prod
 ```
