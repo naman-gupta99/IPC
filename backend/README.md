@@ -17,13 +17,3 @@ npm install
 ```bash
 npm run server
 ```
-
-* To generate the Swagger API Docs in windows , run
-```bash
-npm run server_gen
-```
-
-## API Documentation
-* Run the project in Swagger API Docs Generation Mode
-* Navigate to <YOUR_PROJECT_DIRECTORY>/public/api-docs
-* Open index.html
