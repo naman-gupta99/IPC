@@ -30,3 +30,6 @@ It is still in pre-production stage and hence can't be used right now.
 
 ## Ideation Issues
 - For the platforms that don't provide support for Chat-Bots we have come up with an idea of dummy user. Once connected to the user they want to talk to the user messages this dummy user which then forwards the message to the user on the other end. This gives rise to a privacy issue. The problem with this idea is that gitter records all of the conversation that has been done between the users, i.e. the dummy InterPlatformChat user and the actual user and provides it to us. This means we'll always have the record of each and every message that has been sent or received by a user connected using Gitter. Now, it could be argued that even in the case of a Chat Bot the response still do come through a server where the messages could be easily stored and used in similar way. But if there's a better way why not use that.
+
+## Resources
+- Storyboard : https://trello.com/invite/b/8lOmBe9k/e1f1fe5753c87efadf9bf0c6eec5844a/ipc
