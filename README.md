@@ -16,6 +16,14 @@ The server maintains a record of each connection and keeps on monitoring each no
 ## Usage Guide
 It is still in pre-production stage and hence can't be used right now.
 
+## Contributors Guide
+- ### Commit Guidelines
+ - No commit should include changes in both frontend and backend directories.
+ - Format of Commit Message
+ ```
+ git commit -m "<frontend OR backend OR (empty)>:<list of files edited> | <username> | <reason of changes>"
+ ```
+
 ## Status
 - Gitter node stuck with an ideation flaw.
 - Slack node in early-development stage.
