@@ -15,15 +15,9 @@ npm install
 
 * Run the following command in the project directory to run the server in development mode in windows
 ```bash
-npm run server
+npm run server_dev
 ```
-
-* To generate the Swagger API Docs in windows , run
+* Run the following command in the project directory to run the server in production mode in windows
 ```bash
-npm run server_gen
+npm run server_prod
 ```
-
-## API Documentation
-* Run the project in Swagger API Docs Generation Mode
-* Navigate to <YOUR_PROJECT_DIRECTORY>/public/api-docs
-* Open index.html
