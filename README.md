@@ -25,7 +25,7 @@ It is still in pre-production stage and hence can't be used right now.
  ```
 
 ## Status
-- Gitter node stuck with an ideation flaw.
+- Gitter node in early-development-stage.
 - Slack node in early-development stage.
 
 ## Ideation Issues
