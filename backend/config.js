@@ -21,4 +21,4 @@ const config = {
   }
 };
 
-export default config[nodeEnv];
+export default config[nodeEnv]
