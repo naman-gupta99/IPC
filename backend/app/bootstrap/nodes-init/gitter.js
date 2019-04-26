@@ -1,5 +1,6 @@
 import request from 'request';
 import config from '../../../config'
+import gitterRead from "../../read-streams/gitter";
 
 const gitterInit = () => {
 
@@ -8,6 +9,7 @@ const gitterInit = () => {
     const url = "https://api.gitter.im/v1/user/" + config.gitter.userId + "/rooms";
     const header = { "content-type": "application/x-www-form-urlencoded", "Authorization": config.gitter.authorization }
     let firstResponse = true;
+    let roomIds = [];
 
     const checkRoom = () => {
         request
@@ -17,16 +19,25 @@ const gitterInit = () => {
             }, (error, response, body) => {
                 if (error) {
                     console.log(error);
-                    setTimeout(checkRoom, 5);
+                    setTimeout(checkRoom, 10);
                 }
                 else {
-                    console.log(body);
+                    body = JSON.parse(body);
                     if (firstResponse) {
-                        // Function to initiate all read streams without sending message to register
+                        for (let x of body) {
+                            roomIds.push(x.id);
+                            gitterRead(x.id);
+                        }
+                        firstResponse = false;
                     } else {
-                        // Function to post a message to register and to initiate read stream
+                        for (let x of body) {
+                            if (!roomIds.includes(x.id)) {
+                                roomIds.push(x.id);
+                                gitterRead(x.id);
+                            }
+                        }
                     }
-                    setTimeout(checkRoom, 1);
+                    setTimeout(checkRoom, 5);
                 }
             });
     }
