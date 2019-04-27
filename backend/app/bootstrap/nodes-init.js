@@ -1,1 +1,7 @@
-const gitter = require('gitter');
+import gitterInit from './nodes-init/gitter';
+
+nodesInit = () => {
+    gitterInit();
+}
+
+export default nodesInit;
