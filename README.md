@@ -21,7 +21,7 @@ It is still in pre-production stage and hence can't be used right now.
  - No commit should include changes in both frontend and backend directories.
  - Format of Commit Message
  ```
- git commit -m "<frontend OR backend OR (empty)>:<list of files edited> | <username> | <reason of changes>"
+ git commit -m "<frontend OR backend OR (empty)>: <Reason or Contents of changes> | <Github Issue No. if applicable>"
  ```
 
 ## Status
