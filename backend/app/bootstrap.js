@@ -1,6 +1,6 @@
 import nodesInit from './bootstrap/nodes-init';
 
-bootstrap = () => {
+const bootstrap = () => {
     nodesInit();
 }
 

@@ -1,6 +1,6 @@
 import gitterInit from './nodes-init/gitter';
 
-nodesInit = () => {
+const nodesInit = () => {
     gitterInit();
 }
 

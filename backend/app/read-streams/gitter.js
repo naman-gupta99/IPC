@@ -13,9 +13,10 @@ const gitterRead = (roomId) => {
                 let msg = chunk.toString();
                 if (msg !== " \n") {
                     const data = JSON.parse(msg);
-                    const message = data.text;
-                    console.log(message);
-                    messageHandler('gitter', message, { "roomId": roomId });
+                    if (data.fromUser.username != 'InterPlatformChat') {
+                        const message = data.text;
+                        messageHandler('gitter', message, { "roomId": roomId });
+                    }
                 }
             })
         });
