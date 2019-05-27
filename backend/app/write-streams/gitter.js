@@ -4,7 +4,7 @@ import config from '../../config';
 
 const gitterWrite = (message, params) => {
     request.post({
-        "headers": { "content-type": "application/x-www-form-urlencoded", "Authorization": config.gitter.authorization },
+        "headers": { "content-type": "application/x-www-form-urlencoded", "Authorization": config.nodes.gitter.authorization },
         "url": "https://api.gitter.im/v1/rooms/" + params.roomId + "/chatMessages",
         "body": querystring.stringify({
             text: message

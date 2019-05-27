@@ -6,8 +6,8 @@ const gitterInit = () => {
 
     console.log("Initializing gitter")
 
-    const url = "https://api.gitter.im/v1/user/" + config.gitter.userId + "/rooms";
-    const header = { "content-type": "application/x-www-form-urlencoded", "Authorization": config.gitter.authorization }
+    const url = "https://api.gitter.im/v1/user/" + config.nodes.gitter.userId + "/rooms";
+    const header = { "content-type": "application/x-www-form-urlencoded", "Authorization": config.nodes.gitter.authorization }
     let firstResponse = true;
     let roomIds = [];
 
@@ -18,7 +18,7 @@ const gitterInit = () => {
                 "url": url
             }, (error, response, body) => {
                 if (error) {
-                    console.log(error);
+                    console.log("Gitter Room Check Failure, bootstrap/gitter.js : " + error);
                     setTimeout(checkRoom, 10);
                 }
                 else {

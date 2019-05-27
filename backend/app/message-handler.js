@@ -1,14 +1,14 @@
-import writeStreamFunctions from "./write-stream-func";
+import writeStreamFunctions from './write-stream-func';
+import User from './models/User';
 
-const messageHandler = (senderPlatform, message, senderParams) => {
+const messageHandler = (recieverUsername, message) => {
 
-    // API hit to find the connection
-    const recieverPlatform = 'gitter';
-    const recieverParams = {
-        roomId: "5c9de354d73408ce4fbc325f"
-    }
-
-    writeStreamFunctions[recieverPlatform](message, recieverParams);
+    User.find({ "username": "Sumit" })
+        .then(user => {
+            const recieverPlatform = user[0].get('platform');
+            const recieverParams = user[0].get('params');
+            writeStreamFunctions[recieverPlatform](message, recieverParams);
+        });
 
 }
 

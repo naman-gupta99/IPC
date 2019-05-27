@@ -9,7 +9,7 @@
     "server_prod": "SET NODE_ENV=prod&& npm run server"
   },
   "author": "TheMaroonKnight",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "async": "^2.6.1",
     "babel-cli": "^6.26.0",
