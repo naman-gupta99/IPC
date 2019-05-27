@@ -7,12 +7,6 @@ const Response = {
       data,
     };
   },
-  authError() {
-    return Response.error(
-      401,
-      'authentication error',
-    );
-  },
   success(message, data = null) {
     return {
       success: true,

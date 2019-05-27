@@ -1,14 +1,14 @@
-import express from "express";
-import path from "path";
-import config from "./config";
-import middleware from "./app/middleware";
-import appRoutes from "./app/routes";
-import mongodb from "./app/mongodb";
+import express from 'express';
+import path from 'path';
+import config from './config';
+import middleware from './app/middleware';
+import bootstrap from './app/bootstrap';
+import appRoutes from './app/routes';
 
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
-mongodb();
+bootstrap();
 middleware(app);
 appRoutes(app);
 

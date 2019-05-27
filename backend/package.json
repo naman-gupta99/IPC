@@ -9,7 +9,7 @@
     "server_prod": "SET NODE_ENV=prod&& npm run server"
   },
   "author": "TheMaroonKnight",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "async": "^2.6.1",
     "babel-cli": "^6.26.0",
@@ -23,6 +23,8 @@
     "mongoose": "^5.3.15",
     "morgan": "^1.9.1",
     "node-fetch": "^2.3.0",
+    "querystring": "^0.2.0",
+    "request": "^2.88.0",
     "rimraf": "^2.6.2",
     "swagger-jsdoc": "^3.2.6",
     "winston": "^3.1.0",
