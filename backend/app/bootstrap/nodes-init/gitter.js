@@ -22,6 +22,11 @@ const gitterInit = () => {
                     setTimeout(checkRoom, 10);
                 }
                 else {
+                    try {
+                        JSON.parse(body);
+                    } catch (e) {
+                        setTimeout(checkRoom, 10);
+                    }
                     body = JSON.parse(body);
                     if (firstResponse) {
                         for (let x of body) {
