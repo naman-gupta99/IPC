@@ -1,5 +1,3 @@
-[![Known Vulnerabilities](https://snyk.io/test/github/naman-gupta99/IPC/badge.svg)](https://snyk.io/test/github/naman-gupta99/IPC)
-
 # IPC (Inter Platform Chat)
 
 ## Steps to setup the API:
