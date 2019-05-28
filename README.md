@@ -1,5 +1,3 @@
-[![Known Vulnerabilities](https://snyk.io/test/github/naman-gupta99/IPC/badge.svg)](https://snyk.io/test/github/naman-gupta99/IPC)
-
 # InterPlatformChat
 InterPlatformChat or IPC is a NodeJS based application that enables the users to connect with other users with the independence of choosing the messenger they like the most.
 
