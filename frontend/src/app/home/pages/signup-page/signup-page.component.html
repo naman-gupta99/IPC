@@ -10,19 +10,26 @@
             </span>
             <div class="avatar-upload">
               <div class="avatar-edit">
-                <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" (change)="onImageUploaded($event)">
                 <label for="imageUpload"><i class="material-icons addIcon">add</i></label>
               </div>
-              <div class="avatar-preview">
-                <div id="imagePreview" style="background-image: url(http://i.pravatar.cc/500?img=7);">
+              <img [src]="imageUrl" class="avatar-preview" id="imagePreview">
+            </div>
+            <div>
+              <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" autocomplete="off">
+                <div>
+                  <input placeholder="Enter your Username" id="username" formControlName="username" type="text"
+                    class="validate usernameTextbox">
+                  <span
+                    *ngIf="!signUpForm.get('username').valid && signUpForm.get('username').touched && !signUpForm.get('username').pending && signUpForm.get('username').value.length !== 0">
+                    This Username is not available!</span>
                 </div>
-              </div>
-            </div>
-            <div><input placeholder="Enter your Username" id="username" type="text" class="validate usernameTextbox">
-            </div>
-            <div class="submitDiv">
-              <button class="submitBtn btn waves-effect waves-light" type="submit" name="action">SUBMIT
-              </button>
+                <div class="submitDiv">
+                  <button class="submitBtn btn waves-effect waves-light" type="submit" name="action"
+                    [disabled]="!signUpForm.valid">SUBMIT
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
