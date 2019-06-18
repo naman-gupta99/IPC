@@ -3,7 +3,7 @@ import User from './models/User';
 
 const messageHandler = (recieverUsername, message) => {
 
-    User.find({ "username": "Sumit" })
+    User.find({ "username": recieverUsername })
         .then(user => {
             const recieverPlatform = user[0].get('platform');
             const recieverParams = user[0].get('params');
