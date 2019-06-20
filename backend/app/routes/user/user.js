@@ -22,6 +22,15 @@ router.get('/username/:username', (req, res) => {
         .catch(err => res.status(404).json(ResponseTemplate.error(404, "User Not Found", err)));
 });
 
+// @route  GET user/usernames
+// @desc   Get all usernames
+// @access Private
+router.get('/usernames', (req, res) => {
+    Users.find({}, { "_id": 0, "username": 1 })
+        .then(usernames => res.status(200).json(ResponseTemplate.success('Usernames found', usernames)))
+        .catch(err => res.status(404).json(ResponseTemplate.error(404, "Usernames couldn't be found", err)));
+});
+
 // @route  POST user
 // @desc   Post a new user
 // @access Private
