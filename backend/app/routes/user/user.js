@@ -8,7 +8,7 @@ const router = express.Router();
 // @desc   Get a user by userId
 // @access Private
 router.get("/userId/:id", (req, res) => {
-  Users.find({ userId: req.params.id })
+  Users.findOne({ userId: req.params.id })
     .then(user =>
       res.status(200).json(ResponseTemplate.success("User Found", user))
     )
@@ -18,10 +18,10 @@ router.get("/userId/:id", (req, res) => {
 });
 
 // @route  GET user/username/:username
-// @desc   Get a user by userId
+// @desc   Get a user by username
 // @access Private
 router.get("/username/:username", (req, res) => {
-  Users.find({ username: req.params.username })
+  Users.findOne({ username: req.params.username })
     .then(user =>
       res.status(200).json(ResponseTemplate.success("User Found", user))
     )
