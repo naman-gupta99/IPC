@@ -26,6 +26,16 @@ const userSchema = mongoose.Schema({
     require: true,
     unique: false
   },
+  inRequests: {
+    type: Array,
+    require: true,
+    unique: false
+  },
+  outRequests: {
+    type: Array,
+    require: true,
+    unique: false
+  },
   profilePicture: {
     type: String,
     require: true,
