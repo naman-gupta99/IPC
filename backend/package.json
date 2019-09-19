@@ -11,6 +11,8 @@
   "author": "TheMaroonKnight",
   "license": "MIT",
   "dependencies": {
+    "ask-sdk": "^2.7.0",
+    "ask-sdk-express-adapter": "^2.0.0",
     "async": "^2.6.1",
     "babel-cli": "^6.26.0",
     "body-parser": "^1.18.3",

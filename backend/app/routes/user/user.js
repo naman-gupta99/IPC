@@ -57,6 +57,8 @@ router.post("/", (req, res) => {
     username: req.body.username,
     params: req.body.params,
     connection: "NONE",
+    inRequests: [],
+    outRequests: [],
     profilePicture: req.body.profilePicture
   });
   newUser
@@ -71,24 +73,80 @@ router.post("/", (req, res) => {
     );
 });
 
+// @route  POST user/request
+// @desc   Post a new user connection request
+// @access Private
+router.post("/request", (req, res) => {
+  Users.updateOne(
+    { username: req.body.outUsername },
+    { $addToSet: { outRequests: req.body.inUsername } }
+  )
+    .then(() => {
+      Users.updateOne(
+        { username: req.body.inUsername },
+        { $addToSet: { inRequests: req.body.outUsername } }
+      )
+        .then(() => {
+          res.status(200).json(
+            ResponseTemplate.success("Request sent", {
+              outUsername: req.body.outUsername,
+              inUsername: req.body.inUsername
+            })
+          );
+        })
+        .catch(err => {
+          console.log(err);
+          res
+            .status(400)
+            .json(
+              ResponseTemplate.error(400, "Request could not be sent", err)
+            );
+        });
+    })
+    .catch(err =>
+      res
+        .status(400)
+        .json(ResponseTemplate.error(400, "Request could not be sent", err))
+    );
+});
+
 // @route  POST user/connect
 // @desc   Post a new user connection
 // @access Private
 router.post("/connect", (req, res) => {
-  Users.update(
-    { username: req.body.username1 },
-    { connection: req.body.username2 }
-  )
+  const outUsername = req.body.outUsername;
+  const inUsername = req.body.inUsername;
+
+  Users.findOne({ username: outUsername }, (err, user) => {
+    if (err) throw err;
+    user.connection = inUsername;
+    user.outRequests.forEach(username => {
+      Users.updateOne(
+        { username: username },
+        { $pull: { inRequests: outUsername } }
+      ).then();
+    });
+    user.outRequests = [];
+    Users.updateOne({ username: outUsername }, user).then();
+  })
     .then(() => {
-      Users.update(
-        { username: req.body.username2 },
-        { connection: req.body.username1 }
-      )
+      Users.findOne({ username: inUsername }, (err, user) => {
+        if (err) throw err;
+        user.connection = outUsername;
+        user.outRequests.forEach(username => {
+          Users.updateOne(
+            { username: username },
+            { $pull: { inRequests: inUsername } }
+          ).then();
+        });
+        user.outRequests = [];
+        Users.updateOne({ username: outUsername }, user).then();
+      })
         .then(() =>
           res.status(200).json(
             ResponseTemplate.success("Connection Established", {
-              username1: req.body.username1,
-              username2: req.body.username2
+              outUsername: outUsername,
+              inUsername: inUsername
             })
           )
         )
@@ -114,6 +172,35 @@ router.post("/connect", (req, res) => {
             err
           )
         )
+    );
+});
+
+// @route  POST user/disconnect
+// @desc   Post a new user disconnection
+// @access Private
+router.post("/disconnect", (req, res) => {
+  Users.updateOne({ username: req.body.username1 }, { connection: "NONE" })
+    .then(() => {
+      Users.updateOne({ username: req.body.username2 }, { connection: "NONE" })
+        .then(() => {
+          res.status(200).json(
+            ResponseTemplate.success("Disconnected", {
+              username1: req.body.username1,
+              username2: req.body.username2
+            })
+          );
+        })
+        .catch(err => {
+          console.log(err);
+          res
+            .status(400)
+            .json(ResponseTemplate.error(400, "Disconnection Failed", err));
+        });
+    })
+    .catch(err =>
+      res
+        .status(400)
+        .json(ResponseTemplate.error(400, "Disconnection Failed", err))
     );
 });
 
