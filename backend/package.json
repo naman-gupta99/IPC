@@ -11,6 +11,8 @@
   "author": "TheMaroonKnight",
   "license": "MIT",
   "dependencies": {
+    "ask-sdk": "^2.7.0",
+    "ask-sdk-express-adapter": "^2.0.0",
     "async": "^2.6.1",
     "babel-cli": "^6.26.0",
     "body-parser": "^1.18.3",
@@ -23,6 +25,7 @@
     "mongoose": "^5.3.15",
     "morgan": "^1.9.1",
     "node-fetch": "^2.3.0",
+    "nodemon": "^1.19.2",
     "querystring": "^0.2.0",
     "request": "^2.88.0",
     "rimraf": "^2.6.2",
