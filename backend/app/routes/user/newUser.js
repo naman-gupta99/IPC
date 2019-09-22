@@ -8,14 +8,16 @@ const router = express.Router();
 // @desc   Get a newUser by userId
 // @access Private
 router.get("/:id", (req, res) => {
-  NewUsers.find({ userId: req.params.id })
+  NewUsers.findOne({
+      userId: req.params.id
+    })
     .then(newUser =>
       res.status(200).json(ResponseTemplate.success("New User Found", newUser))
     )
     .catch(err =>
       res
-        .status(404)
-        .json(ResponseTemplate.error(404, "New User Not Found", err))
+      .status(404)
+      .json(ResponseTemplate.error(404, "New User Not Found", err))
     );
 });
 
@@ -36,10 +38,10 @@ router.post("/", (req, res) => {
     )
     .catch(err =>
       res
-        .status(400)
-        .json(
-          ResponseTemplate.error(400, "New User could not be Recorded", err)
-        )
+      .status(400)
+      .json(
+        ResponseTemplate.error(400, "New User could not be Recorded", err)
+      )
     );
 });
 
@@ -47,14 +49,16 @@ router.post("/", (req, res) => {
 // @desc   Delete a newUser by userId
 // @access Private
 router.delete("/:id", (req, res) => {
-  NewUsers.deleteOne({ userId: req.params.id })
+  NewUsers.deleteOne({
+      userId: req.params.id
+    })
     .then(user =>
       res.status(200).json(ResponseTemplate.success("New User Deleted", user))
     )
     .catch(err =>
       res
-        .status(400)
-        .json(ResponseTemplate.error(400, "New User could not be Deleted", err))
+      .status(400)
+      .json(ResponseTemplate.error(400, "New User could not be Deleted", err))
     );
 });
 

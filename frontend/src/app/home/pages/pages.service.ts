@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class PagesService {
-    private user: User;
+    user: User;
 
     constructor(private http: HttpClient, private router: Router) { }
 
@@ -15,26 +15,30 @@ export class PagesService {
             success: boolean,
             code: number,
             message: string,
-            data: [{
+            data: {
                 userId: string,
                 platform: string,
                 params: Object
-            }]
+            }
         }>('http://localhost:8000/newUser/' + id)
             .pipe(map((newUser) => {
                 return {
-                    userId: newUser.data[0].userId,
-                    platform: newUser.data[0].platform,
+                    userId: newUser.data.userId,
+                    platform: newUser.data.platform,
                     username: username,
-                    params: newUser.data[0].params,
+                    params: newUser.data.params,
                     profilePicture: profilePicture,
-                    connection: 'NONE'
+                    connection: 'NONE',
+                    inRequests: [],
+                    outRequests: []
                 };
             }))
             .subscribe((user) => {
                 console.log(user);
+                // console.log(user.inRequests);
                 this.user = user;
                 this.postUser();
+                localStorage.setItem('userId', id);
             });
     }
 
@@ -43,7 +47,7 @@ export class PagesService {
             .subscribe(responseData => {
                 console.log(responseData);
                 this.deleteNewUser(this.user.userId);
-                this.router.navigate(['/home/connected']);
+                this.router.navigate(['/home/connect']);
             }, err => {
                 console.log(err);
             });
@@ -54,5 +58,9 @@ export class PagesService {
             .subscribe(responseData => {
                 console.log(responseData);
             });
+    }
+
+    getUser(userId: string) {
+        return this.http.get<{ data: User }>('http://localhost:8000/user/userId/' + userId);
     }
 }
