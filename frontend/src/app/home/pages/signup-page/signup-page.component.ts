@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../../auth/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { PagesService } from '../pages.service';
 
 @Component({
   selector: 'app-signup-page',
@@ -14,9 +16,11 @@ export class SignupPageComponent implements OnInit {
   forbiddenUsernames = [];
   userNameValid = false;
   currentUserName: string;
-  constructor(private authService: AuthService) { }
+  id: string;
+  constructor(private authService: AuthService, private route: ActivatedRoute, private pagesService: PagesService) { }
 
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id');
     this.signUpForm = new FormGroup({
       'username': new FormControl(null, [Validators.required, Validators.maxLength(20)], this.validateUsername.bind(this))
     });
@@ -48,5 +52,6 @@ export class SignupPageComponent implements OnInit {
   onSubmit() {
     this.signUpForm.reset();
     this.authService.addUsername(this.currentUserName);
+    this.pagesService.getNewUserObject(this.id, this.currentUserName, this.imageUrl);
   }
 }
