@@ -1,7 +1,6 @@
 import express from "express";
 import ResponseTemplate from "../../global/templates/response";
 import Users from "../../models/User";
-import { getIo } from "../../../socket";
 
 const router = express.Router();
 
@@ -11,15 +10,15 @@ const router = express.Router();
 router.get("/userId/:id", (req, res) => {
   console.log(req.params.id);
   Users.findOne({
-    userId: req.params.id
-  })
+      userId: req.params.id
+    })
     .then(user => {
       console.log(user);
       res.status(200).json(ResponseTemplate.success("User Found", user));
     })
     .catch(err => {
       console.log(err);
-      res.status(404).json(ResponseTemplate.error(404, "User Not Found", err));
+      res.status(404).json(ResponseTemplate.error(404, "User Not Found", err))
     });
 });
 
@@ -28,8 +27,8 @@ router.get("/userId/:id", (req, res) => {
 // @access Private
 router.get("/username/:username", (req, res) => {
   Users.findOne({
-    username: req.params.username
-  })
+      username: req.params.username
+    })
     .then(user =>
       res.status(200).json(ResponseTemplate.success("User Found", user))
     )
@@ -42,22 +41,19 @@ router.get("/username/:username", (req, res) => {
 // @desc   Get all usernames
 // @access Private
 router.get("/usernames", (req, res) => {
-  Users.find(
-    {},
-    {
+  Users.find({}, {
       _id: 0,
       username: 1
-    }
-  )
+    })
     .then(usernames =>
       res
-        .status(200)
-        .json(ResponseTemplate.success("Usernames found", usernames))
+      .status(200)
+      .json(ResponseTemplate.success("Usernames found", usernames))
     )
     .catch(err =>
       res
-        .status(404)
-        .json(ResponseTemplate.error(404, "Usernames couldn't be found", err))
+      .status(404)
+      .json(ResponseTemplate.error(404, "Usernames couldn't be found", err))
     );
 });
 
@@ -82,8 +78,8 @@ router.post("/", (req, res) => {
     )
     .catch(err =>
       res
-        .status(400)
-        .json(ResponseTemplate.error(400, "User could not be Registered", err))
+      .status(400)
+      .json(ResponseTemplate.error(400, "User could not be Registered", err))
     );
 });
 
@@ -91,27 +87,21 @@ router.post("/", (req, res) => {
 // @desc   Post a new user connection request
 // @access Private
 router.post("/request", (req, res) => {
-  Users.updateOne(
-    {
+  Users.updateOne({
       username: req.body.outUsername
-    },
-    {
+    }, {
       $addToSet: {
         outRequests: req.body.inUsername
       }
-    }
-  )
+    })
     .then(() => {
-      Users.updateOne(
-        {
+      Users.updateOne({
           username: req.body.inUsername
-        },
-        {
+        }, {
           $addToSet: {
             inRequests: req.body.outUsername
           }
-        }
-      )
+        })
         .then(() => {
           res.status(200).json(
             ResponseTemplate.success("Request sent", {
@@ -131,8 +121,8 @@ router.post("/request", (req, res) => {
     })
     .catch(err =>
       res
-        .status(400)
-        .json(ResponseTemplate.error(400, "Request could not be sent", err))
+      .status(400)
+      .json(ResponseTemplate.error(400, "Request could not be sent", err))
     );
 });
 
@@ -143,97 +133,75 @@ router.post("/connect", (req, res) => {
   const outUsername = req.body.outUsername;
   const inUsername = req.body.inUsername;
 
-  Users.findOne(
-    {
+  Users.findOne({
       username: outUsername
-    },
-    (err, user) => {
+    }, (err, user) => {
       if (err) throw err;
       user.connection = inUsername;
       user.outRequests.forEach(username => {
-        Users.updateOne(
-          {
-            username: username
-          },
-          {
-            $pull: {
-              inRequests: outUsername
-            }
+        Users.updateOne({
+          username: username
+        }, {
+          $pull: {
+            inRequests: outUsername
           }
-        ).then();
+        }).then();
       });
       user.outRequests = [];
-      Users.updateOne(
-        {
-          username: outUsername
-        },
-        user
-      ).then();
-    }
-  )
+      Users.updateOne({
+        username: outUsername
+      }, user).then();
+    })
     .then(() => {
-      Users.findOne(
-        {
+      Users.findOne({
           username: inUsername
-        },
-        (err, user) => {
+        }, (err, user) => {
           if (err) throw err;
           user.connection = outUsername;
           user.outRequests.forEach(username => {
-            Users.updateOne(
-              {
-                username: username
-              },
-              {
-                $pull: {
-                  inRequests: inUsername
-                }
+            Users.updateOne({
+              username: username
+            }, {
+              $pull: {
+                inRequests: inUsername
               }
-            ).then();
+            }).then();
           });
           user.outRequests = [];
-          Users.updateOne(
-            {
-              username: outUsername
-            },
-            user
-          ).then();
-        }
-      )
-        .then(() => {
-          getIo()
-            .to(outUsername)
-            .emit("connected", "connected")
-            .catch();
+          Users.updateOne({
+            username: outUsername
+          }, user).then();
+        })
+        .then(() =>
           res.status(200).json(
             ResponseTemplate.success("Connection Established", {
               outUsername: outUsername,
               inUsername: inUsername
             })
-          );
-        })
+          )
+        )
         .catch(err =>
           res
-            .status(400)
-            .json(
-              ResponseTemplate.error(
-                400,
-                "Connection could not be established",
-                err
-              )
+          .status(400)
+          .json(
+            ResponseTemplate.error(
+              400,
+              "Connection could not be established",
+              err
             )
+          )
         );
     })
     .catch(err =>
       res
-        .status(400)
-        .json(
-          ResponseTemplate.error(
-            400,
-            "Connection could not be established",
-            err
-          )
+      .status(400)
+      .json(
+        ResponseTemplate.error(
+          400,
+          "Connection could not be established",
+          err
         )
+      )
     );
 });
 
@@ -241,23 +209,17 @@ router.post("/connect", (req, res) => {
 // @desc   Post a new user disconnection
 // @access Private
 router.post("/disconnect", (req, res) => {
-  Users.updateOne(
-    {
+  Users.updateOne({
       username: req.body.username1
-    },
-    {
+    }, {
       connection: "NONE"
-    }
-  )
+    })
     .then(() => {
-      Users.updateOne(
-        {
+      Users.updateOne({
           username: req.body.username2
-        },
-        {
+        }, {
           connection: "NONE"
-        }
-      )
+        })
         .then(() => {
           res.status(200).json(
             ResponseTemplate.success("Disconnected", {
@@ -275,8 +237,8 @@ router.post("/disconnect", (req, res) => {
     })
     .catch(err =>
       res
-        .status(400)
-        .json(ResponseTemplate.error(400, "Disconnection Failed", err))
+      .status(400)
+      .json(ResponseTemplate.error(400, "Disconnection Failed", err))
     );
 });
 
