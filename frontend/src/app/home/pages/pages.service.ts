@@ -35,10 +35,8 @@ export class PagesService {
             }))
             .subscribe((user) => {
                 console.log(user);
-                // console.log(user.inRequests);
                 this.user = user;
                 this.postUser();
-                localStorage.setItem('userId', id);
             });
     }
 
@@ -47,7 +45,7 @@ export class PagesService {
             .subscribe(responseData => {
                 console.log(responseData);
                 this.deleteNewUser(this.user.userId);
-                this.router.navigate(['/home/connect']);
+                this.router.navigate(['/home/connect', this.user.userId]);
             }, err => {
                 console.log(err);
             });

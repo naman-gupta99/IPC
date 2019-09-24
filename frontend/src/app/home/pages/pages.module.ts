@@ -6,13 +6,15 @@ import { SignupPageComponent } from './signup-page/signup-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ConnectPageComponent } from './connect-page/connect-page.component';
 import { FilterPipe } from './filter.pipe';
+import { AlexaConnectPageComponent } from './alexa-connect-page/alexa-connect-page.component';
 
 @NgModule({
   declarations: [
     ConnectedPageComponent,
     SignupPageComponent,
     ConnectPageComponent,
-    FilterPipe
+    FilterPipe,
+    AlexaConnectPageComponent
   ],
   imports: [
     CommonModule,

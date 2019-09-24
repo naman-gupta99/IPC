@@ -3,11 +3,12 @@ import { Routes, RouterModule } from "@angular/router";
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
-  { path: "home", loadChildren: "./home/home.module#HomeModule" }
+  { path: "home", loadChildren: "./home/home.module#HomeModule" },
+  { path: "dashboard", loadChildren: "./dashboard/dashboard.module#DashboardModule" }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

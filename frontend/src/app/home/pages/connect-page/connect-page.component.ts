@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../user.model';
 import { HttpClient } from '@angular/common/http';
 import { PagesService } from '../pages.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-connect-page',
@@ -14,12 +15,14 @@ export class ConnectPageComponent implements OnInit {
     isRequested = false;
     currentUser: string;
     disable = false;
-    constructor(private http: HttpClient, private pagesService: PagesService) { }
+    userId: string;
+    constructor(private http: HttpClient, private pagesService: PagesService, private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.userId = this.route.snapshot.paramMap.get('id');
         if (!this.pagesService.user) {
-            console.log(localStorage.getItem('userId'));
-            this.pagesService.getUser(localStorage.getItem('userId'))
+            console.log(this.userId);
+            this.pagesService.getUser(this.userId)
                 .subscribe(user => {
                     this.pagesService.user = user.data;
                     this.currentUser = user.data.username;
