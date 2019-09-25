@@ -7,7 +7,7 @@
           <div>
             <input type="text" [(ngModel)]="searchContent">
             <ul>
-              <li *ngFor="let user of users | filter:searchContent:currentUser">
+              <li *ngFor="let user of userNames | filter:searchContent:currentUser">
                 <div>{{ user }}
                   <button *ngIf="alreadyRequested(user)" (click)="sendRequest(user)"
                     [(disabled)]="disable">Request</button>

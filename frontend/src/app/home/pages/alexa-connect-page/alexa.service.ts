@@ -11,18 +11,24 @@ export class AlexaService {
     responseType: string;
     state: string;
     redirectUri: string;
-    code = 'alexa123';
+    code: string;
     constructor(private pagesService: PagesService, private http: HttpClient, private router: Router) { }
 
-    postUser(username: string) {
+    postUser(username: string, imageUrl: string) {
+        this.code = 'alexa' + Date.now();
         const user = {
-            userId: 'alexa123',
+            userId: this.code,
             platform: 'alexa',
             username: username,
-            params: {},
-            profilePicture: ''
+            params: { userId: this.code },
+            profilePicture: imageUrl
         };
-        window.open(this.redirectUri + '?state=' + this.state + '&code=' + this.code);
+        this.http.post('http://localhost:8000/user/', user)
+            .subscribe(response => {
+                window.open(this.redirectUri + '?state=' + this.state + '&code=' + this.code, '_self');
+            }, err => {
+                console.log(err);
+            });
     }
 
 

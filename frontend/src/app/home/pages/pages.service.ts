@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class PagesService {
     user: User;
-
+    usernames: string[];
     constructor(private http: HttpClient, private router: Router) { }
 
     getNewUserObject(id: string, username: string, profilePicture: string) {
@@ -45,7 +45,7 @@ export class PagesService {
             .subscribe(responseData => {
                 console.log(responseData);
                 this.deleteNewUser(this.user.userId);
-                this.router.navigate(['/home/connect', this.user.userId]);
+                this.router.navigate(['/home/dashboard', this.user.userId]);
             }, err => {
                 console.log(err);
             });
@@ -60,5 +60,16 @@ export class PagesService {
 
     getUser(userId: string) {
         return this.http.get<{ data: User }>('http://localhost:8000/user/userId/' + userId);
+    }
+
+    getUsernames() {
+        return this.http.get<{
+            success: boolean,
+            code: number,
+            message: string,
+            data: [{
+                username: string,
+            }]
+        }>('http://localhost:8000/user/usernames');
     }
 }

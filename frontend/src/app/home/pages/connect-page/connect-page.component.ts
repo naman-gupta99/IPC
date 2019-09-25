@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ConnectPageComponent implements OnInit {
     searchContent: string;
-    users = [];
+    userNames = [];
     isRequested = false;
     currentUser: string;
     disable = false;
@@ -26,31 +26,29 @@ export class ConnectPageComponent implements OnInit {
                 .subscribe(user => {
                     this.pagesService.user = user.data;
                     this.currentUser = user.data.username;
-                    this.getUserNames();
+                    if (!this.pagesService.usernames) {
+                        this.getUserNames();
+                    }
                 }, err => {
                     console.log(err);
                 });
         } else {
             console.log(this.pagesService.user);
             this.currentUser = this.pagesService.user.username;
-            this.getUserNames();
+            if (this.pagesService.usernames.length !== 0) {
+                this.getUserNames();
+            }
         }
     }
 
     getUserNames() {
-        this.http.get<{
-            success: boolean,
-            code: number,
-            message: string,
-            data: [{
-                username: string,
-            }]
-        }>('http://localhost:8000/user/usernames')
+        this.pagesService.getUsernames()
             .subscribe(responseData => {
                 for (const i of responseData.data) {
-                    this.users.push({ username: i.username });
+                    this.userNames.push(i.username.toLowerCase());
+                    this.pagesService.usernames = this.userNames;
                 }
-                console.log(this.users);
+                console.log(this.userNames);
             });
     }
 

@@ -61,6 +61,7 @@ router.get("/usernames", (req, res) => {
 // @desc   Post a new user
 // @access Private
 router.post("/", (req, res) => {
+  console.log("called");
   const newUser = new Users({
     userId: req.body.userId,
     platform: req.body.platform,

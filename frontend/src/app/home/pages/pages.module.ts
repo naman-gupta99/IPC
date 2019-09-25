@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ConnectPageComponent } from './connect-page/connect-page.component';
 import { FilterPipe } from './filter.pipe';
 import { AlexaConnectPageComponent } from './alexa-connect-page/alexa-connect-page.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { AlexaConnectPageComponent } from './alexa-connect-page/alexa-connect-pa
     SignupPageComponent,
     ConnectPageComponent,
     FilterPipe,
-    AlexaConnectPageComponent
+    AlexaConnectPageComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,

@@ -58,7 +58,7 @@ export class AlexaConnectPageComponent implements OnInit {
     onSubmit() {
         this.signUpForm.reset();
         this.authService.addUsername(this.currentUserName);
-        this.alexaService.postUser(this.currentUserName);
+        this.alexaService.postUser(this.currentUserName, this.imageUrl);
     }
 }
 
