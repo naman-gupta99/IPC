@@ -15,6 +15,7 @@
     "ask-sdk-express-adapter": "^2.0.0",
     "async": "^2.6.1",
     "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "express": "^4.16.4",

@@ -1,6 +1,6 @@
 import express from "express";
 import ResponseTemplate from "../../global/templates/response";
-import Users from "../../models/User";
+import User from "../../models/User";
 
 const router = express.Router();
 
@@ -8,7 +8,7 @@ const router = express.Router();
 // @desc   Get a user by userId
 // @access Private
 router.get("/userId/:id", (req, res) => {
-  Users.findOne({ userId: req.params.id })
+  User.findOne({ userId: req.params.id })
     .then(user =>
       res.status(200).json(ResponseTemplate.success("User Found", user))
     )
@@ -21,7 +21,7 @@ router.get("/userId/:id", (req, res) => {
 // @desc   Get a user by username
 // @access Private
 router.get("/username/:username", (req, res) => {
-  Users.findOne({ username: req.params.username })
+  User.findOne({ username: req.params.username })
     .then(user =>
       res.status(200).json(ResponseTemplate.success("User Found", user))
     )
@@ -34,7 +34,7 @@ router.get("/username/:username", (req, res) => {
 // @desc   Get all usernames
 // @access Private
 router.get("/usernames", (req, res) => {
-  Users.find({}, { _id: 0, username: 1 })
+  User.find({}, { _id: 0, username: 1 })
     .then(usernames =>
       res
         .status(200)
@@ -51,7 +51,7 @@ router.get("/usernames", (req, res) => {
 // @desc   Post a new user
 // @access Private
 router.post("/", (req, res) => {
-  const newUser = new Users({
+  const newUser = new User({
     userId: req.body.userId,
     platform: req.body.platform,
     username: req.body.username,
@@ -77,12 +77,12 @@ router.post("/", (req, res) => {
 // @desc   Post a new user connection request
 // @access Private
 router.post("/request", (req, res) => {
-  Users.updateOne(
+  User.updateOne(
     { username: req.body.outUsername },
     { $addToSet: { outRequests: req.body.inUsername } }
   )
     .then(() => {
-      Users.updateOne(
+      User.updateOne(
         { username: req.body.inUsername },
         { $addToSet: { inRequests: req.body.outUsername } }
       )
@@ -117,30 +117,30 @@ router.post("/connect", (req, res) => {
   const outUsername = req.body.outUsername;
   const inUsername = req.body.inUsername;
 
-  Users.findOne({ username: outUsername }, (err, user) => {
+  User.findOne({ username: outUsername }, (err, user) => {
     if (err) throw err;
     user.connection = inUsername;
     user.outRequests.forEach(username => {
-      Users.updateOne(
+      User.updateOne(
         { username: username },
         { $pull: { inRequests: outUsername } }
       ).then();
     });
     user.outRequests = [];
-    Users.updateOne({ username: outUsername }, user).then();
+    User.updateOne({ username: outUsername }, user).then();
   })
     .then(() => {
-      Users.findOne({ username: inUsername }, (err, user) => {
+      User.findOne({ username: inUsername }, (err, user) => {
         if (err) throw err;
         user.connection = outUsername;
         user.outRequests.forEach(username => {
-          Users.updateOne(
+          User.updateOne(
             { username: username },
             { $pull: { inRequests: inUsername } }
           ).then();
         });
         user.outRequests = [];
-        Users.updateOne({ username: outUsername }, user).then();
+        User.updateOne({ username: outUsername }, user).then();
       })
         .then(() =>
           res.status(200).json(
@@ -179,9 +179,9 @@ router.post("/connect", (req, res) => {
 // @desc   Post a new user disconnection
 // @access Private
 router.post("/disconnect", (req, res) => {
-  Users.updateOne({ username: req.body.username1 }, { connection: "NONE" })
+  User.updateOne({ username: req.body.username1 }, { connection: "NONE" })
     .then(() => {
-      Users.updateOne({ username: req.body.username2 }, { connection: "NONE" })
+      User.updateOne({ username: req.body.username2 }, { connection: "NONE" })
         .then(() => {
           res.status(200).json(
             ResponseTemplate.success("Disconnected", {
