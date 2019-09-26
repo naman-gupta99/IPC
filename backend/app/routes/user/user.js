@@ -170,7 +170,7 @@ router.post("/connect", (req, res) => {
           });
           user.outRequests = [];
           Users.updateOne({
-            username: outUsername
+            username: inUsername
           }, user).then();
         })
         .then(() =>
