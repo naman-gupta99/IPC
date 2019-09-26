@@ -1,9 +1,6 @@
 import express from "express";
 import ResponseTemplate from "../../global/templates/response";
 import Users from "../../models/User";
-import {
-  getIO
-} from "../../socket";
 
 const router = express.Router();
 
@@ -176,15 +173,14 @@ router.post("/connect", (req, res) => {
             username: outUsername
           }, user).then();
         })
-        .then(() => {
+        .then(() =>
           res.status(200).json(
             ResponseTemplate.success("Connection Established", {
               outUsername: outUsername,
               inUsername: inUsername
             })
           )
-          getIO().to(outUsername).emit('connected', inUsername);
-        })
+        )
         .catch(err =>
           res
           .status(400)

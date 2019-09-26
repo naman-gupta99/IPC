@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { PagesService } from '../pages.service';
-import { Subscription } from 'rxjs';
-import { ConnectionService } from '../connection.service';
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -13,9 +11,7 @@ import { ConnectionService } from '../connection.service';
 export class DashboardComponent implements OnInit {
     userId: string;
     connectPage = true;
-    subscription: Subscription;
-    constructor(private http: HttpClient, private route: ActivatedRoute,
-        private pagesService: PagesService, private connectionService: ConnectionService) { }
+    constructor(private http: HttpClient, private route: ActivatedRoute, private pagesService: PagesService) { }
 
     ngOnInit() {
         this.userId = this.route.snapshot.paramMap.get('id');
@@ -29,11 +25,6 @@ export class DashboardComponent implements OnInit {
                     } else {
                         this.connectPage = false;
                     }
-                    this.subscription = this.connectionService.getConnectionUsername()
-                        .subscribe(connectionUsername => {
-                            console.log(connectionUsername);
-                            this.pagesService.user.connection = connectionUsername;
-                        });
                 }, err => {
                     console.log(err);
                 });
