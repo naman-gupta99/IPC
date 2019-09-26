@@ -31,9 +31,18 @@ const newUserHandler = x => {
       });
       newUser
         .save()
-        .then(
-          user => console.log(user) // and send user link
-        )
+        .then(user => {
+          const message =
+            "You have not registered on InterPlatFormChat. Head to the link to register : " +
+            config.app.frontendURL +
+            "/signup/gitter" +
+            user.userId +
+            " \nPlease do not share the url with anybody else.";
+          const params = {
+            roomId: x.id
+          };
+          gitterWrite(message, params);
+        })
         .catch(err => console.log(err));
     }
   });
