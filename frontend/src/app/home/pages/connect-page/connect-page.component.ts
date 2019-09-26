@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../user.model';
 import { HttpClient } from '@angular/common/http';
 import { PagesService } from '../pages.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-connect-page',
@@ -16,7 +16,8 @@ export class ConnectPageComponent implements OnInit {
     currentUser: string;
     disable = false;
     userId: string;
-    constructor(private http: HttpClient, private pagesService: PagesService, private route: ActivatedRoute) { }
+    constructor(private http: HttpClient, private pagesService: PagesService,
+        private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
         this.userId = this.route.snapshot.paramMap.get('id');
@@ -83,7 +84,16 @@ export class ConnectPageComponent implements OnInit {
         }
     }
 
-    acceptRequest() {
-
+    acceptRequest(outUsername: string) {
+        this.pagesService.connectToUser(outUsername)
+            .subscribe(response => {
+                console.log(response);
+                this.pagesService.user.connection = outUsername;
+                if (this.pagesService.connectPage !== false) {
+                    this.pagesService.updateConnection(false);
+                }
+            }, err => {
+                console.log(err);
+            });
     }
 }

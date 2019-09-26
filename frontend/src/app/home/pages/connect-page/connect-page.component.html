@@ -9,8 +9,8 @@
             <ul>
               <li *ngFor="let user of userNames | filter:searchContent:currentUser">
                 <div>{{ user }}
-                  <button *ngIf="alreadyRequested(user)" (click)="sendRequest(user)"
-                    [(disabled)]="disable">Request</button>
+                  <button *ngIf="alreadyRequested(user)" (click)="sendRequest(user)" [(disabled)]="disable"
+                    ng-disabled="disable">Request</button>
                   <button *ngIf="isRequested" (click)="acceptRequest(user)">Connect</button>
                 </div>
               </li>

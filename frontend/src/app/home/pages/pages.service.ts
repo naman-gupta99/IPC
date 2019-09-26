@@ -3,12 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { User } from './user.model';
 import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class PagesService {
     user: User;
     usernames: string[];
-    constructor(private http: HttpClient, private router: Router) { }
+    connectPage = true;
+    connectPageChange = new Subject<boolean>();
+
+    constructor(private http: HttpClient, private router: Router) {
+    }
 
     getNewUserObject(id: string, username: string, profilePicture: string) {
         this.http.get<{
@@ -71,5 +76,29 @@ export class PagesService {
                 username: string,
             }]
         }>('http://localhost:8000/user/usernames');
+    }
+
+    connectToUser(outUsername: string) {
+        return this.http.post('http://localhost:8000/user/connect', { outUsername: outUsername, inUsername: this.user.username });
+    }
+
+    disconnectUser() {
+        this.http.post(
+            'http://localhost:8000/user/disconnect',
+            {
+                username1: this.user.username,
+                username2: this.user.connection
+            })
+            .subscribe(response => {
+                console.log(response);
+                this.connectPage = true;
+            }, err => {
+                console.log(err);
+            });
+    }
+
+    updateConnection(val: boolean) {
+        this.connectPage = val;
+        this.connectPageChange.next(val);
     }
 }
