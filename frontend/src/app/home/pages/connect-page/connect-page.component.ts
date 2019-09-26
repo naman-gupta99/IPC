@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
     styleUrls: ['./connect-page.component.scss']
 })
 export class ConnectPageComponent implements OnInit {
-    searchContent: string;
+    searchContent = '';
     userNames = [];
     isRequested = false;
     currentUser: string;
@@ -35,8 +35,11 @@ export class ConnectPageComponent implements OnInit {
         } else {
             console.log(this.pagesService.user);
             this.currentUser = this.pagesService.user.username;
-            if (this.pagesService.usernames.length !== 0) {
+            console.log(this.pagesService.usernames);
+            if (!this.pagesService.usernames) {
                 this.getUserNames();
+            } else {
+                this.userNames = this.pagesService.usernames;
             }
         }
     }
