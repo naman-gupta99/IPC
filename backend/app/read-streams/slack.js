@@ -11,7 +11,7 @@ const slackRead = (data) => {
                             .then(userConnection => {
                                 const recieverUsername = userConnection[0].get('connection');
                                 messageHandler(recieverUsername, message);
-                            });
+                            }).catch(err => console.log(err));
 
 }
 
