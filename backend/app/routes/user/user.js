@@ -1,6 +1,7 @@
 import express from "express";
 import ResponseTemplate from "../../global/templates/response";
 import User from "../../models/User";
+import { getIO } from "../../socket";
 
 const router = express.Router();
 
@@ -117,39 +118,74 @@ router.post("/connect", (req, res) => {
   const outUsername = req.body.outUsername;
   const inUsername = req.body.inUsername;
 
-  User.findOne({ username: outUsername }, (err, user) => {
-    if (err) throw err;
-    user.connection = inUsername;
-    user.outRequests.forEach(username => {
-      User.updateOne(
-        { username: username },
-        { $pull: { inRequests: outUsername } }
+  Users.findOne(
+    {
+      username: outUsername
+    },
+    (err, user) => {
+      if (err) throw err;
+      user.connection = inUsername;
+      user.outRequests.forEach(username => {
+        Users.updateOne(
+          {
+            username: username
+          },
+          {
+            $pull: {
+              inRequests: outUsername
+            }
+          }
+        ).then();
+      });
+      user.outRequests = [];
+      Users.updateOne(
+        {
+          username: outUsername
+        },
+        user
       ).then();
-    });
-    user.outRequests = [];
-    User.updateOne({ username: outUsername }, user).then();
-  })
+    }
+  )
     .then(() => {
-      User.findOne({ username: inUsername }, (err, user) => {
-        if (err) throw err;
-        user.connection = outUsername;
-        user.outRequests.forEach(username => {
-          User.updateOne(
-            { username: username },
-            { $pull: { inRequests: inUsername } }
+      Users.findOne(
+        {
+          username: inUsername
+        },
+        (err, user) => {
+          if (err) throw err;
+          user.connection = outUsername;
+          user.outRequests.forEach(username => {
+            Users.updateOne(
+              {
+                username: username
+              },
+              {
+                $pull: {
+                  inRequests: inUsername
+                }
+              }
+            ).then();
+          });
+          user.outRequests = [];
+          Users.updateOne(
+            {
+              username: inUsername
+            },
+            user
           ).then();
-        });
-        user.outRequests = [];
-        User.updateOne({ username: outUsername }, user).then();
-      })
-        .then(() =>
+        }
+      )
+        .then(() => {
           res.status(200).json(
             ResponseTemplate.success("Connection Established", {
               outUsername: outUsername,
               inUsername: inUsername
             })
-          )
-        )
+          );
+          getIO()
+            .to(outUsername)
+            .emit("connected", inUsername);
+        })
         .catch(err =>
           res
             .status(400)

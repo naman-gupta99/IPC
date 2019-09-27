@@ -1,0 +1,23 @@
+<div class="connectedPageContainer">
+  <span class="logo connectedLogo">InterPlatformChat</span>
+  <div class="row rowConnected">
+    <div class="col colConnected">
+      <div class="card">
+        <div class="card-content">
+          <div>
+            <input type="text" [(ngModel)]="searchContent">
+            <ul>
+              <li *ngFor="let user of userNames | filter:searchContent:currentUser">
+                <div>{{ user }}
+                  <button *ngIf="alreadyRequested(user)" (click)="sendRequest(user)" [(disabled)]="disable"
+                    ng-disabled="disable">Request</button>
+                  <button *ngIf="isRequested" (click)="acceptRequest(user)">Connect</button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
