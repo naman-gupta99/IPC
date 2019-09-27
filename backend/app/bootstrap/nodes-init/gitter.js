@@ -31,9 +31,18 @@ const newUserHandler = x => {
       });
       newUser
         .save()
-        .then(
-          user => console.log(user) // and send user link
-        )
+        .then(user => {
+          const message =
+            "You have not registered on InterPlatFormChat. Head to the link to register : " +
+            config.app.frontendURL +
+            "/signup/gitter" +
+            user.userId +
+            " \nPlease do not share the url with anybody else.";
+          const params = {
+            roomId: x.id
+          };
+          gitterWrite(message, params);
+        })
         .catch(err => console.log(err));
     }
   });
@@ -81,24 +90,23 @@ const gitterInit = () => {
           setTimeout(checkRoom, 10);
         } else {
           try {
-            JSON.parse(body);
+            body = JSON.parse(body);
+            if (firstResponse) {
+              body.forEach(x => {
+                newRoomHandler(x);
+              });
+              firstResponse = false;
+            } else {
+              body.forEach(x => {
+                if (!roomIds.includes(x.id)) {
+                  newRoomHandler(x);
+                }
+              });
+            }
+            setTimeout(checkRoom, 5);
           } catch (e) {
             setTimeout(checkRoom, 10);
           }
-          body = JSON.parse(body);
-          if (firstResponse) {
-            for (let x of body) {
-              newRoomHandler(x);
-            }
-            firstResponse = false;
-          } else {
-            for (let x of body) {
-              if (!roomIds.includes(x.id)) {
-                newRoomHandler(x);
-              }
-            }
-          }
-          setTimeout(checkRoom, 5);
         }
       }
     );

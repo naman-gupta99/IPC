@@ -12,6 +12,16 @@ import { stream } from "../log";
 
 // const Filestore = sessionStore(expressSession);
 
+const unless = (path, middleware) => {
+  return function(req, res, next) {
+    if (path === req.path) {
+      return next();
+    } else {
+      return middleware(req, res, next);
+    }
+  };
+};
+
 const middleware = app => {
   app.set("port", process.env.PORT || configServer.app.PORT);
   // adding security fixes
@@ -39,11 +49,14 @@ const middleware = app => {
   );
 
   app.use(
-    bodyParser.urlencoded({
-      extended: false
-    })
+    unless(
+      "/alexa/handler",
+      bodyParser.urlencoded({
+        extended: false
+      })
+    )
   ); // parse application/x-www-form-urlencoded
-  app.use(bodyParser.json()); // parse application/json
+  app.use(unless("/alexa/handler", bodyParser.json())); // parse application/json
   /**
    * enable CORS support. // Cross-Origin Request Support
    */
@@ -54,9 +67,8 @@ const middleware = app => {
       stream
     })
   );
-  app.use(ContentTypeMiddleware);
-  app.use(EmptyContentMiddleware);
-  app.use(CsrfMiddleware);
+  // app.use(unless("/alexa/handler", ContentTypeMiddleware));
+  // app.use(unless("/alexa/handler", EmptyContentMiddleware));
+  app.use(unless("/alexa/handler", CsrfMiddleware));
 };
-
 export default middleware;
