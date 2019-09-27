@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { PagesModule } from './pages/pages.module';
-import { AlexaService } from './pages/alexa-connect-page/alexa.service';
+import { AlexaService } from './pages/alexa.service';
 import { ConnectionService } from './pages/connection.service';
 
 @NgModule({

@@ -67,6 +67,10 @@ export class PagesService {
         return this.http.get<{ data: User }>('http://localhost:8000/user/userId/' + userId);
     }
 
+    getUserByUsername(userName: string) {
+        return this.http.get<{ data: User }>('http://localhost:8000/user/username/' + userName);
+    }
+
     getUsernames() {
         return this.http.get<{
             success: boolean,

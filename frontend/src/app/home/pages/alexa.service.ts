@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { User } from '../user.model';
-import { PagesService } from '../pages.service';
+import { User } from './user.model';
+import { PagesService } from './pages.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -20,7 +20,9 @@ export class AlexaService {
             userId: this.code,
             platform: 'alexa',
             username: username,
-            params: { userId: this.code },
+            params: {
+                userId: this.code
+            },
             profilePicture: imageUrl
         };
         this.http.post('http://localhost:8000/user/', user)
@@ -30,6 +32,4 @@ export class AlexaService {
                 console.log(err);
             });
     }
-
-
 }

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Socket } from './socket.model';
 import { Observer, Observable } from 'rxjs';
 import * as socketIo from 'socket.io-client';
 
 @Injectable()
 export class ConnectionService {
 
-    socket: Socket;
+    socket;
     observer: Observer<string>;
 
     getConnectionUsername(username: string): Observable<string> {

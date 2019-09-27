@@ -57,6 +57,8 @@ export class ConnectPageComponent implements OnInit {
     }
 
     alreadyRequested(user: string) {
+        console.log('callleddd');
+        console.log(this.pagesService.user);
         if (this.pagesService.user.inRequests.includes(user)) {
             this.isRequested = true;
             if (this.pagesService.user.outRequests.includes(user)) {
