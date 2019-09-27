@@ -14,7 +14,7 @@ const newUserHandler = x => {
       const message =
         "You have not registered on InterPlatFormChat. Head to the link to register : " +
         config.app.frontendURL +
-        "/signup/gitter" +
+        "/home/signup/gitter" +
         x.id +
         " \nPlease do not share the url with anybody else.";
       const params = {
