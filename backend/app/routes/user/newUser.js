@@ -8,7 +8,7 @@ const router = express.Router();
 // @desc   Get a newUser by userId
 // @access Private
 router.get("/:id", (req, res) => {
-  NewUsers.findOne({
+  NewUser.findOne({
     userId: req.params.id
   })
     .then(newUser =>

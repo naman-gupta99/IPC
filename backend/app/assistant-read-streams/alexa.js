@@ -52,6 +52,7 @@ const ConnectionIntentHandler = {
 
     return handlerInput.responseBuilder
       .speak(speechText)
+      .reprompt(speechText)
       .withSimpleCard("InterPlatformChat", cardContent)
       .getResponse();
   }
@@ -75,6 +76,7 @@ const ConnectIntentHandler = {
 
     return handlerInput.responseBuilder
       .speak(speechText)
+      .reprompt(speechText)
       .withSimpleCard("InterPlatformChat", cardContent)
       .getResponse();
   }
@@ -100,6 +102,7 @@ const MessageIntentHandler = {
 
     return handlerInput.responseBuilder
       .speak(speechText)
+      .reprompt(speechText)
       .withSimpleCard("InterPlatformChat", cardContent)
       .getResponse();
   }
@@ -124,6 +127,7 @@ const ReceiveMessageIntentHandler = {
 
     return handlerInput.responseBuilder
       .speak(speechText)
+      .reprompt(speechText)
       .withSimpleCard("InterPlatformChat", cardContent)
       .getResponse();
   }
@@ -147,6 +151,7 @@ const DisconnectIntentHandler = {
 
     return handlerInput.responseBuilder
       .speak(speechText)
+      .reprompt(speechText)
       .withSimpleCard("InterPlatformChat", cardContent)
       .getResponse();
   }

@@ -118,7 +118,7 @@ router.post("/connect", (req, res) => {
   const outUsername = req.body.outUsername;
   const inUsername = req.body.inUsername;
 
-  Users.findOne(
+  User.findOne(
     {
       username: outUsername
     },
@@ -126,7 +126,7 @@ router.post("/connect", (req, res) => {
       if (err) throw err;
       user.connection = inUsername;
       user.outRequests.forEach(username => {
-        Users.updateOne(
+        User.updateOne(
           {
             username: username
           },
@@ -138,7 +138,7 @@ router.post("/connect", (req, res) => {
         ).then();
       });
       user.outRequests = [];
-      Users.updateOne(
+      User.updateOne(
         {
           username: outUsername
         },
@@ -147,7 +147,7 @@ router.post("/connect", (req, res) => {
     }
   )
     .then(() => {
-      Users.findOne(
+      User.findOne(
         {
           username: inUsername
         },
@@ -155,7 +155,7 @@ router.post("/connect", (req, res) => {
           if (err) throw err;
           user.connection = outUsername;
           user.outRequests.forEach(username => {
-            Users.updateOne(
+            User.updateOne(
               {
                 username: username
               },
@@ -167,7 +167,7 @@ router.post("/connect", (req, res) => {
             ).then();
           });
           user.outRequests = [];
-          Users.updateOne(
+          User.updateOne(
             {
               username: inUsername
             },
