@@ -6,9 +6,21 @@ import NewUser from "../../models/NewUser";
 import slackWrite from "../../write-streams/slack";
 
 
+
 // New user registration
-const NewUserHandler = x => {
-  NewUser.find({userId : "slack" +x.channel })
+const newUserHandler = x => {
+    const bot = new Slackbot({
+  token : config.nodes.slack.token,
+  name  : config.nodes.slack.name 
+    });
+
+   const params1={
+    icon_emoji:':smiley:'
+   }
+    
+    
+
+  NewUser.findOne({userId : "slack" +x.channel })
     .then(user => {
         if(!user) {
           const newUser = new NewUser({
@@ -20,9 +32,20 @@ const NewUserHandler = x => {
           });
           newUser.save()
             .then(
-              user => console.log(user)
+              user => {
+                let message = config.app.frontendURL+"/home/signup/slack"+x.channel;
+                  bot.postMessage(x.channel,message,params1);
+                  bot.postMessage(x.channel,"Dont share it with someone else",params1);
+              }
             )
             .catch(err => console.log(err));
+
+        }
+        else
+        {
+            let message = config.app.frontendURL+"/home/signup/slack"+x.channel;
+                  bot.postMessage(x.channel,message,params1);
+                  bot.postMessage(x.channel,"Dont share it with someone else",params1);
 
         }
 
@@ -32,12 +55,18 @@ const NewUserHandler = x => {
 
 // User handler
 const UserHandler = x => {
-  User.find({userId : "slack" + x.channel })
+  User.findOne({userId : "slack" + x.channel })
     .then(user => {
-        if(user)
-           return ;
-        else 
+        if(!user)
+        {
+          //console.log("user doesnot exists");
           newUserHandler(x);
+        }
+        else 
+          {
+            console.log("User exits");
+            slackRead(x);
+          }
       })
       .catch(err =>{
          console.log(err);
@@ -75,7 +104,7 @@ const slackInit = () => {
       {  
          //console.log(data);
          UserHandler(data);
-         slackRead(data);
+         //slackRead(data);
 
           //bot.postMessage(data.channel,"Message from server");
       }
