@@ -90,24 +90,23 @@ const gitterInit = () => {
           setTimeout(checkRoom, 10);
         } else {
           try {
-            JSON.parse(body);
+            body = JSON.parse(body);
+            if (firstResponse) {
+              body.forEach(x => {
+                newRoomHandler(x);
+              });
+              firstResponse = false;
+            } else {
+              body.forEach(x => {
+                if (!roomIds.includes(x.id)) {
+                  newRoomHandler(x);
+                }
+              });
+            }
+            setTimeout(checkRoom, 5);
           } catch (e) {
             setTimeout(checkRoom, 10);
           }
-          body = JSON.parse(body);
-          if (firstResponse) {
-            for (let x of body) {
-              newRoomHandler(x);
-            }
-            firstResponse = false;
-          } else {
-            for (let x of body) {
-              if (!roomIds.includes(x.id)) {
-                newRoomHandler(x);
-              }
-            }
-          }
-          setTimeout(checkRoom, 5);
         }
       }
     );

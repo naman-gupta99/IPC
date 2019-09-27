@@ -4,7 +4,9 @@ import {
   LaunchResponseGetter,
   ConnectionGetter,
   ConnectionPutter,
-  MessagePutter
+  MessagePutter,
+  MessageGetter,
+  DisconnectionPutter
 } from "./alexa/functions";
 
 const skillBuilder = Alexa.SkillBuilders.custom();
@@ -92,6 +94,30 @@ const MessageIntentHandler = {
       handlerInput.requestEnvelope.request.intent.slots.message.value;
 
     const responseObject = await MessagePutter(accessToken, message);
+
+    const speechText = responseObject.speechText;
+    const cardContent = responseObject.cardContent;
+
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .withSimpleCard("InterPlatformChat", cardContent)
+      .getResponse();
+  }
+};
+
+const ReceiveMessageIntentHandler = {
+  canHandle(handlerInput) {
+    return (
+      handlerInput.requestEnvelope.request.type === "IntentRequest" &&
+      handlerInput.requestEnvelope.request.intent.name ===
+        "ReceiveMessageIntent"
+    );
+  },
+  async handle(handlerInput) {
+    const accessToken =
+      handlerInput.requestEnvelope.context.System.user.accessToken;
+
+    const responseObject = await MessageGetter(accessToken);
 
     const speechText = responseObject.speechText;
     const cardContent = responseObject.cardContent;
@@ -196,6 +222,7 @@ const skill = skillBuilder
     ConnectionIntentHandler,
     ConnectIntentHandler,
     MessageIntentHandler,
+    ReceiveMessageIntentHandler,
     DisconnectIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,

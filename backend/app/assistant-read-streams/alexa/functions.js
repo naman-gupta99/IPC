@@ -1,4 +1,5 @@
 import User from "../../models/User";
+import AlexaMessageQueue from "../../models/AlexaMessageQueue";
 import config from "../../../config";
 import messageHandler from "../../message-handler";
 
@@ -98,7 +99,7 @@ export const MessagePutter = (userId, message) => {
   return new Promise((resolve, reject) => {
     User.findOne({ userId: userId })
       .then(user => {
-        messageHandler(user.connection, message);
+        messageHandler(user.connection, message.toLowerCase());
         resolve({
           speechText: "Your message has been sent.",
           cardContent: "Your message has been sent"
@@ -106,6 +107,25 @@ export const MessagePutter = (userId, message) => {
       })
       .catch(err => {
         console.log("Alexa function error : " + err);
+      });
+  });
+};
+
+export const MessageGetter = userId => {
+  return new Promise((resolve, reject) => {
+    AlexaMessageQueue.findOneAndUpdate({ userId: userId }, { messageQueue: [] })
+      .then(user => {
+        let text = "<s>You recieved the following messages : </s>";
+        user.messageQueue.forEach(message => {
+          text += "<s> " + message + "</s>";
+        });
+        resolve({
+          speechText: text,
+          cardContent: text
+        });
+      })
+      .catch(err => {
+        console.log("Alexa functions error : " + err);
       });
   });
 };
@@ -131,4 +151,11 @@ export const DisconnectionPutter = userId => {
   });
 };
 
-export default { LaunchResponseGetter, ConnectionGetter, ConnectionPutter };
+export default {
+  LaunchResponseGetter,
+  ConnectionGetter,
+  ConnectionPutter,
+  MessagePutter,
+  MessageGetter,
+  DisconnectionPutter
+};

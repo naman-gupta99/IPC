@@ -1,5 +1,5 @@
 import express from "express";
-import adapter from "../../node-helpers/alexa";
+import adapter from "../../assistant-read-streams/alexa";
 
 const router = express.Router();
 
