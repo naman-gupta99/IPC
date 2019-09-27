@@ -3,32 +3,39 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { User } from './user.model';
 import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class PagesService {
-    private user: User;
+    user: User;
+    usernames: string[];
+    connectPage = true;
+    connectPageChange = new Subject<boolean>();
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private http: HttpClient, private router: Router) {
+    }
 
     getNewUserObject(id: string, username: string, profilePicture: string) {
         this.http.get<{
             success: boolean,
             code: number,
             message: string,
-            data: [{
+            data: {
                 userId: string,
                 platform: string,
                 params: Object
-            }]
+            }
         }>('http://localhost:8000/newUser/' + id)
             .pipe(map((newUser) => {
                 return {
-                    userId: newUser.data[0].userId,
-                    platform: newUser.data[0].platform,
+                    userId: newUser.data.userId,
+                    platform: newUser.data.platform,
                     username: username,
-                    params: newUser.data[0].params,
+                    params: newUser.data.params,
                     profilePicture: profilePicture,
-                    connection: 'NONE'
+                    connection: 'NONE',
+                    inRequests: [],
+                    outRequests: []
                 };
             }))
             .subscribe((user) => {
@@ -43,7 +50,7 @@ export class PagesService {
             .subscribe(responseData => {
                 console.log(responseData);
                 this.deleteNewUser(this.user.userId);
-                this.router.navigate(['/home/connected']);
+                this.router.navigate(['/home/dashboard', this.user.userId]);
             }, err => {
                 console.log(err);
             });
@@ -54,5 +61,48 @@ export class PagesService {
             .subscribe(responseData => {
                 console.log(responseData);
             });
+    }
+
+    getUser(userId: string) {
+        return this.http.get<{ data: User }>('http://localhost:8000/user/userId/' + userId);
+    }
+
+    getUserByUsername(userName: string) {
+        return this.http.get<{ data: User }>('http://localhost:8000/user/username/' + userName);
+    }
+
+    getUsernames() {
+        return this.http.get<{
+            success: boolean,
+            code: number,
+            message: string,
+            data: [{
+                username: string,
+            }]
+        }>('http://localhost:8000/user/usernames');
+    }
+
+    connectToUser(outUsername: string) {
+        return this.http.post('http://localhost:8000/user/connect', { outUsername: outUsername, inUsername: this.user.username });
+    }
+
+    disconnectUser() {
+        this.http.post(
+            'http://localhost:8000/user/disconnect',
+            {
+                username1: this.user.username,
+                username2: this.user.connection
+            })
+            .subscribe(response => {
+                console.log(response);
+                this.connectPage = true;
+            }, err => {
+                console.log(err);
+            });
+    }
+
+    updateConnection(val: boolean) {
+        this.connectPage = val;
+        this.connectPageChange.next(val);
     }
 }
