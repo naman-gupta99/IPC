@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const userSchema = mongoose.Schema({
-
   userId: {
     type: String,
     required: true,
@@ -26,8 +25,22 @@ const userSchema = mongoose.Schema({
     type: String,
     require: true,
     unique: false
+  },
+  inRequests: {
+    type: Array,
+    require: true,
+    unique: false
+  },
+  outRequests: {
+    type: Array,
+    require: true,
+    unique: false
+  },
+  profilePicture: {
+    type: String,
+    require: true,
+    unique: false
   }
-
 });
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model("User", userSchema);
