@@ -27,15 +27,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.pagesService.getUser(this.userId)
                 .subscribe(user => {
                     this.pagesService.user = user.data;
-                    if (user.data.connection === 'NONE') {
-                        if (this.pagesService.connectPage !== true) {
-                            this.pagesService.updateConnection(true);
-                        }
-                    } else {
-                        if (this.pagesService.connectPage !== false) {
-                            this.pagesService.updateConnection(false);
-                        }
-                    }
                     this.subscription = this.connectionService.getConnectionUsername(this.pagesService.user.username)
                         .subscribe(connectionUsername => {
                             if (this.connectionService.requestConnection === 0) {
@@ -60,6 +51,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
                             console.log(response);
                             this.connectPage = response;
                         });
+                    if (user.data.connection === 'NONE') {
+                        if (this.pagesService.connectPage !== true) {
+                            this.pagesService.updateConnection(true);
+                        }
+                    } else {
+                        if (this.pagesService.connectPage !== false) {
+                            this.pagesService.updateConnection(false);
+                        }
+                    }
                 }, err => {
                     console.log(err);
                 });
