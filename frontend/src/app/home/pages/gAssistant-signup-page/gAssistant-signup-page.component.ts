@@ -3,14 +3,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../../auth/auth.service';
 import { ActivatedRoute } from '@angular/router';
-import { AlexaService } from '../alexa.service';
+import { GAssistantService } from '../gAssistant.service';
 import { PagesService } from '../pages.service';
 
 @Component({
-    templateUrl: './alexa-signup-page.component.html',
-    styleUrls: ['./alexa-signup-page.component.scss']
+    templateUrl: './gAssistant-signup-page.component.html',
+    styleUrls: ['./gAssistant-signup-page.component.scss']
 })
-export class AlexaSignUpPageComponent implements OnInit {
+export class GAssistantSignUpPageComponent implements OnInit {
     imageUrl: any = 'http://i.pravatar.cc/500?img=7';
     signUpForm: FormGroup;
     forbiddenUsernames = [];
@@ -18,14 +18,14 @@ export class AlexaSignUpPageComponent implements OnInit {
     currentUserName: string;
     id: string;
     constructor(private authService: AuthService, private route: ActivatedRoute,
-        private alexaService: AlexaService, private pagesService: PagesService) { }
+        private gAssistantService: GAssistantService, private pagesService: PagesService) { }
 
     ngOnInit() {
         this.route.queryParams.subscribe(params => {
-            this.alexaService.clientId = params['client_id'];
-            this.alexaService.responseType = params['response_type'];
-            this.alexaService.state = params['state'];
-            this.alexaService.redirectUri = params['redirect_uri'];
+            this.gAssistantService.clientId = params['client_id'];
+            this.gAssistantService.responseType = params['response_type'];
+            this.gAssistantService.state = params['state'];
+            this.gAssistantService.redirectUri = params['redirect_uri'];
         });
 
         this.signUpForm = new FormGroup({
@@ -69,7 +69,7 @@ export class AlexaSignUpPageComponent implements OnInit {
     onSubmit() {
         this.signUpForm.reset();
         this.authService.addUsername(this.currentUserName);
-        this.alexaService.postUser(this.currentUserName, this.imageUrl);
+        this.gAssistantService.postUser(this.currentUserName, this.imageUrl);
     }
 }
 
