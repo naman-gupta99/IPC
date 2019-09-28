@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observer, Observable } from 'rxjs';
 import * as socketIo from 'socket.io-client';
+import { config } from '../../../../config';
 
 @Injectable()
 export class ConnectionService {
@@ -10,7 +11,7 @@ export class ConnectionService {
     observer: Observer<string>;
 
     getConnectionUsername(username: string): Observable<string> {
-        this.socket = socketIo('http://localhost:8000/?u=' + username);
+        this.socket = socketIo(config.backendUrl + '/?u=' + username);
         console.log(this.socket);
         this.socket.on('connected', (res) => {
             console.log('connect - ' + res);

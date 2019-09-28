@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../../../auth/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { AlexaService } from '../alexa.service';
+import { PagesService } from '../pages.service';
 
 @Component({
     templateUrl: './alexa-signup-page.component.html',
@@ -16,7 +17,8 @@ export class AlexaSignUpPageComponent implements OnInit {
     userNameValid = false;
     currentUserName: string;
     id: string;
-    constructor(private authService: AuthService, private route: ActivatedRoute, private alexaService: AlexaService) { }
+    constructor(private authService: AuthService, private route: ActivatedRoute,
+        private alexaService: AlexaService, private pagesService: PagesService) { }
 
     ngOnInit() {
         this.route.queryParams.subscribe(params => {
@@ -29,20 +31,29 @@ export class AlexaSignUpPageComponent implements OnInit {
         this.signUpForm = new FormGroup({
             'username': new FormControl(null, [Validators.required, Validators.maxLength(20)], this.validateUsername.bind(this))
         });
+
+        if (!this.pagesService.usernames) {
+            this.pagesService.getUsernames().subscribe(responseData => {
+                for (const i of responseData.data) {
+                    this.forbiddenUsernames.push(i.username.toLowerCase());
+                    this.pagesService.usernames = this.forbiddenUsernames;
+                }
+            });
+        } else {
+            this.forbiddenUsernames = this.pagesService.usernames;
+        }
     }
 
     validateUsername(control: FormControl): Promise<any> | Observable<any> {
         const promise = new Promise<any>((resolve) => {
             setTimeout(() => {
-                // call server and query for entered username in database
-                this.forbiddenUsernames = this.authService.getUsernames();
-                this.currentUserName = control.value;
-                if (this.forbiddenUsernames.indexOf(control.value) !== -1) {
+                this.currentUserName = control.value.toLowerCase();
+                if (this.forbiddenUsernames.indexOf(this.currentUserName) !== -1) {
                     resolve({ 'forbidden': true });
                 } else {
                     resolve(null);
                 }
-            }, 1500);
+            }, 1000);
         });
         return promise;
     }
@@ -61,4 +72,3 @@ export class AlexaSignUpPageComponent implements OnInit {
         this.alexaService.postUser(this.currentUserName, this.imageUrl);
     }
 }
-

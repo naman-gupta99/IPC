@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User } from './user.model';
 import { map } from 'rxjs/operators';
 import { Subject, Observable, Observer } from 'rxjs';
+import { config } from '../../../../config';
 
 @Injectable()
 export class PagesService {
@@ -25,7 +26,7 @@ export class PagesService {
                 platform: string,
                 params: Object
             }
-        }>('http://localhost:8000/newUser/' + id)
+        }>(config.backendUrl + '/newUser/' + id)
             .pipe(map((newUser) => {
                 return {
                     userId: newUser.data.userId,
