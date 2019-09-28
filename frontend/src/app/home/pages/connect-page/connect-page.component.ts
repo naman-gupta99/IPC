@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../user.model';
 import { HttpClient } from '@angular/common/http';
 import { PagesService } from '../pages.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { ConnectionService } from '../connection.service';
 
 @Component({
     selector: 'app-connect-page',
@@ -16,8 +17,10 @@ export class ConnectPageComponent implements OnInit {
     currentUser: string;
     disable = false;
     userId: string;
+    imgSrc = 'http://i.pravatar.cc/500?img=7';
+    requestSubscription: Subscription;
     constructor(private http: HttpClient, private pagesService: PagesService,
-        private route: ActivatedRoute, private router: Router) { }
+        private route: ActivatedRoute, private router: Router, private connectionService: ConnectionService) { }
 
     ngOnInit() {
         this.userId = this.route.snapshot.paramMap.get('id');
@@ -57,8 +60,6 @@ export class ConnectPageComponent implements OnInit {
     }
 
     alreadyRequested(user: string) {
-        console.log('callleddd');
-        console.log(this.pagesService.user);
         if (this.pagesService.user.inRequests.includes(user)) {
             this.isRequested = true;
             if (this.pagesService.user.outRequests.includes(user)) {
@@ -80,6 +81,7 @@ export class ConnectPageComponent implements OnInit {
             this.http.post('http://localhost:8000/user/request', postData)
                 .subscribe(response => {
                     console.log(response);
+                    this.pagesService.user.outRequests.push(inUsername);
                 }, err => {
                     console.log(err);
                 });

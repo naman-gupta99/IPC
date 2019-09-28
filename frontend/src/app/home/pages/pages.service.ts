@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { User } from './user.model';
 import { map } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Observable, Observer } from 'rxjs';
 
 @Injectable()
 export class PagesService {
@@ -11,7 +11,7 @@ export class PagesService {
     usernames: string[];
     connectPage = true;
     connectPageChange = new Subject<boolean>();
-
+    observer = new Subject<boolean>();
     constructor(private http: HttpClient, private router: Router) {
     }
 
@@ -96,13 +96,22 @@ export class PagesService {
             .subscribe(response => {
                 console.log(response);
                 this.connectPage = true;
+                this.updateConnection(true);
             }, err => {
                 console.log(err);
             });
     }
 
+    getObserver() {
+        return this.observer;
+    }
+
     updateConnection(val: boolean) {
         this.connectPage = val;
-        this.connectPageChange.next(val);
+        this.observer.next(val);
+    }
+
+    getConnectionStatus() {
+        return this.observer.asObservable();
     }
 }
