@@ -94,7 +94,7 @@ router.post("/request", (req, res) => {
               inUsername: req.body.inUsername
             })
           );
-          getIO().to(inUsername).emit("requested", outUsername);
+          getIO().to(req.body.inUsername).emit("requested", req.body.outUsername);
         })
         .catch(err => {
           console.log(err);
