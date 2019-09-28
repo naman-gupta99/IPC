@@ -20,20 +20,17 @@ export class ConnectedPageComponent implements OnInit {
         .subscribe(response => {
           this.pagesService.user = response.data;
           this.profileId = this.pagesService.user.connection;
-          this.profileImgSrc = 'http://i.pravatar.cc/500?img=' + 1;
+          this.profileImgSrc = 'http://i.pravatar.cc/500?img=' + 7;
         }, err => {
           console.log(err);
         });
     } else {
       this.profileId = this.pagesService.user.connection;
-      this.profileImgSrc = 'http://i.pravatar.cc/500?img=' + 1;
+      this.profileImgSrc = 'http://i.pravatar.cc/500?img=' + 7;
     }
   }
 
   onDisconnect() {
     this.pagesService.disconnectUser();
-    if (this.pagesService.connectPage !== false) {
-      this.pagesService.updateConnection(false);
-    }
   }
 }

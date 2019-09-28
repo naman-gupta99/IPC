@@ -82,7 +82,7 @@ export const ConnectionPutter = userId => {
             cardContent:
               "Head to this link to connect to someone : " +
               config.app.frontendURL +
-              user.userId
+              "/alexa/connect"
           });
         }
       } else {
@@ -99,11 +99,29 @@ export const MessagePutter = (userId, message) => {
   return new Promise((resolve, reject) => {
     User.findOne({ userId: userId })
       .then(user => {
-        messageHandler(user.connection, message.toLowerCase());
-        resolve({
-          speechText: "Your message has been sent.",
-          cardContent: "Your message has been sent"
-        });
+        if (user != null) {
+          if (user.connection != "NONE") {
+            messageHandler(user.connection, message.toLowerCase());
+            resolve({
+              speechText: "Your message has been sent.",
+              cardContent: "Your message has been sent."
+            });
+          } else {
+            resolve({
+              speechText:
+                "Open Alexa and navigate to Activity Section and find link to your dashboard",
+              cardContent:
+                "Head to this link to connect to someone : " +
+                config.app.frontendURL +
+                "/alexa/connect"
+            });
+          }
+        } else {
+          resolve({
+            speechText: unregisteredUserResponse,
+            cardContent: unregisteredUserResponse
+          });
+        }
       })
       .catch(err => {
         console.log("Alexa function error : " + err);
