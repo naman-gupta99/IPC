@@ -4,7 +4,6 @@ import messageHandler from "../message-handler";
 import User from "../models/User";
 
 const gitterRead = roomId => {
-  console.log(roomId);
   request
     .get({
       headers: {

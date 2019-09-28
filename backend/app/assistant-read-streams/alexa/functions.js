@@ -81,7 +81,8 @@ export const ConnectionPutter = userId => {
               "Open Alexa and navigate to Activity Section and find link to your dashboard",
             cardContent:
               "Head to this link to connect to someone : " +
-              config.app.frontendURL + "/alexa/connect";
+              config.app.frontendURL +
+              "/alexa/connect"
           });
         }
       } else {
