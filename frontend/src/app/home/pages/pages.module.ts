@@ -9,6 +9,7 @@ import { FilterPipe } from './filter.pipe';
 import { AlexaSignUpPageComponent } from './alexa-signup-page/alexa-signup-page.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AlexaConnectPageComponent } from './alexa-connect-page/alexa-connect-page.component';
+import { GAssistantSignUpPageComponent } from './gAssistant-signup-page/gAssistant-signup-page.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AlexaConnectPageComponent } from './alexa-connect-page/alexa-connect-pa
     FilterPipe,
     AlexaSignUpPageComponent,
     DashboardComponent,
-    AlexaConnectPageComponent
+    AlexaConnectPageComponent,
+    GAssistantSignUpPageComponent
   ],
   imports: [
     CommonModule,
