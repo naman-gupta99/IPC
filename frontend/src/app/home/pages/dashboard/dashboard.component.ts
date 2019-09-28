@@ -15,16 +15,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     connectPage = true;
     subscription: Subscription;
     connectionSubscription: Subscription;
+    requestSubsricption: Subscription;
     constructor(private http: HttpClient, private route: ActivatedRoute,
         private pagesService: PagesService, private connectionService: ConnectionService,
-    ) {
-        this.connectionSubscription = this.pagesService.connectPageChange
-            .subscribe(response => {
-                this.connectPage = response;
-            }, err => {
-                console.log(err);
-            });
-    }
+    ) { }
 
     ngOnInit() {
         this.userId = this.route.snapshot.paramMap.get('id');
@@ -44,11 +38,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     }
                     this.subscription = this.connectionService.getConnectionUsername(this.pagesService.user.username)
                         .subscribe(connectionUsername => {
-                            console.log(connectionUsername);
-                            this.pagesService.user.connection = connectionUsername;
-                            if (this.pagesService.connectPage !== false) {
-                                this.pagesService.updateConnection(false);
+                            if (this.connectionService.requestConnection === 0) {
+                                this.pagesService.user.inRequests.push(connectionUsername);
+                                if (this.pagesService.connectPage !== true) {
+                                    this.pagesService.updateConnection(true);
+                                }
+                            } else if (this.connectionService.requestConnection === 1) {
+                                console.log(connectionUsername);
+                                this.pagesService.user.connection = connectionUsername;
+                                if (this.pagesService.connectPage !== false) {
+                                    this.pagesService.updateConnection(false);
+                                }
+                            } else {
+                                this.pagesService.user.connection = 'NONE';
+                                this.pagesService.user.inRequests.pop();
+                                this.pagesService.updateConnection(true);
                             }
+                        });
+                    this.connectionSubscription = this.pagesService.getConnectionStatus()
+                        .subscribe(response => {
+                            console.log(response);
+                            this.connectPage = response;
                         });
                 }, err => {
                     console.log(err);
