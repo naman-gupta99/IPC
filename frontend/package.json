@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -22,7 +22,9 @@
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
     "core-js": "^2.5.4",
+    "express": "^4.17.1",
     "node-sass": "^4.12.0",
+    "path": "^0.12.7",
     "rxjs": "~6.3.3",
     "snyk": "^1.208.0",
     "socket.io-client": "^2.3.0",
