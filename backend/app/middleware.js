@@ -48,25 +48,14 @@ const middleware = app => {
     })
   );
 
-  app.use(
-    unless(
-      "/alexa/handler",
-      bodyParser.urlencoded({
-        extended: false
-      })
-    )
-  ); // parse application/x-www-form-urlencoded
+  app.use(unless("/alexa/handler", bodyParser.urlencoded({ extended: false }))); // parse application/x-www-form-urlencoded
   app.use(unless("/alexa/handler", bodyParser.json())); // parse application/json
   /**
    * enable CORS support. // Cross-Origin Request Support
    */
   // register all custom Middleware
 
-  app.use(
-    morgan("combined", {
-      stream
-    })
-  );
+  // app.use(morgan("combined", { stream }));
   // app.use(unless("/alexa/handler", ContentTypeMiddleware));
   // app.use(unless("/alexa/handler", EmptyContentMiddleware));
   app.use(unless("/alexa/handler", CsrfMiddleware));

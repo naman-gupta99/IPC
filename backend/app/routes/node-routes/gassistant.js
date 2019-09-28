@@ -14,8 +14,13 @@ router.post("/handler", app);
 router.post("/access", (req, res) => {
   res.send({
     access_token: req.body.code,
-    refresh_token: res.body.code
+    refresh_token: req.body.code
   });
+});
+
+// dummy code TO BE REMOVED
+router.get("/", (req, res) => {
+  res.redirect(200, req.query.redirect_uri + "?code=gassistant12345&state=" + req.query.state);
 });
 
 export default router;
