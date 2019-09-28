@@ -9,8 +9,8 @@ const router = express.Router();
 // @access Private
 router.get("/:id", (req, res) => {
   NewUser.findOne({
-      userId: req.params.id
-    })
+    userId: req.params.id
+  })
     .then(newUser =>
       res.status(200).json(ResponseTemplate.success("New User Found", newUser))
     )

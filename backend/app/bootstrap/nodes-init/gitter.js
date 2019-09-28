@@ -9,12 +9,12 @@ let roomIds = [];
 let newUserIds = [];
 
 const newUserHandler = x => {
-  NewUser.find({ userId: "gitter" + x.id }).then(newUser => {
-    if (newUser.length > 0) {
+  NewUser.findOne({ userId: "gitter" + x.id }).then(newUser => {
+    if (newUser != null) {
       const message =
         "You have not registered on InterPlatFormChat. Head to the link to register : " +
         config.app.frontendURL +
-        "/signup/gitter" +
+        "/home/signup/gitter" +
         x.id +
         " \nPlease do not share the url with anybody else.";
       const params = {
@@ -35,7 +35,7 @@ const newUserHandler = x => {
           const message =
             "You have not registered on InterPlatFormChat. Head to the link to register : " +
             config.app.frontendURL +
-            "/signup/gitter" +
+            "/home/signup/gitter" +
             user.userId +
             " \nPlease do not share the url with anybody else.";
           const params = {
@@ -49,14 +49,16 @@ const newUserHandler = x => {
 };
 
 const newRoomHandler = x => {
-  User.find({ userId: "gitter" + x.id })
+  User.findOne({ userId: "gitter" + x.id })
     .then(user => {
-      if (user.length > 0) {
+      if (user != null) {
         if (newUserIds.includes(x.id)) {
           newUserIds.splice(newUserIds.indexOf(x.id), 1);
         }
-        roomIds.push(x.id);
-        gitterRead(x.id);
+        if (!roomIds.includes(x.id)) {
+          roomIds.push(x.id);
+          gitterRead(x.id);
+        }
       } else if (!newUserIds.includes(x.id)) {
         newUserIds.push(x.id);
         newUserHandler(x);
