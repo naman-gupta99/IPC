@@ -134,14 +134,14 @@ router.post("/connect", (req, res) => {
   const outUsername = req.body.outUsername;
   const inUsername = req.body.inUsername;
 
-  Users.findOne({
+  User.findOne({
         username: outUsername
       },
       (err, user) => {
         if (err) throw err;
         user.connection = inUsername;
         user.outRequests.forEach(username => {
-          Users.updateOne({
+          User.updateOne({
             username: username
           }, {
             $pull: {
@@ -150,7 +150,7 @@ router.post("/connect", (req, res) => {
           }).then();
         });
         user.outRequests = [];
-        Users.updateOne({
+        User.updateOne({
             username: outUsername
           },
           user
@@ -158,14 +158,14 @@ router.post("/connect", (req, res) => {
       }
     )
     .then(() => {
-      Users.findOne({
+      User.findOne({
             username: inUsername
           },
           (err, user) => {
             if (err) throw err;
             user.connection = outUsername;
             user.outRequests.forEach(username => {
-              Users.updateOne({
+              User.updateOne({
                 username: username
               }, {
                 $pull: {
@@ -174,7 +174,7 @@ router.post("/connect", (req, res) => {
               }).then();
             });
             user.outRequests = [];
-            Users.updateOne({
+            User.updateOne({
                 username: inUsername
               },
               user
@@ -239,6 +239,9 @@ router.post("/disconnect", (req, res) => {
               username2: req.body.username2
             })
           );
+          getIO()
+            .to(req.body.username2)
+            .emit("disconnected", req.body.username1);
         })
         .catch(err => {
           console.log(err);
