@@ -1,0 +1,53 @@
+.connectedPageContainer {
+  height: 100vh;
+  width: 100vw;
+  background-color: #1de9b6;
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  align-items: center;
+}
+
+.rowConnected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.colConnected {
+  margin-left: 0px !important;
+}
+
+.card-content {
+  text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .connectedLogo {
+    font-size: 10vw;
+  }
+
+  .colConnected {
+    width: 100vw;
+  }
+}
+
+@media only screen and (min-width:600px) {
+  .connectedLogo {
+    font-size: 7vw;
+  }
+
+  .colConnected {
+    width: 40vw;
+  }
+}
+
+@media only screen and (min-width:1025px) {
+  .connectedLogo {
+    font-size: 5vw;
+  }
+
+  .colConnected {
+    width: 40vw;
+  }
+}

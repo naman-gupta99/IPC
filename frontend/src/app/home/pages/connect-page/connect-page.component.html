@@ -1,0 +1,30 @@
+<div class="connectedPageContainer">
+  <span class="logo connectedLogo">InterPlatformChat</span>
+  <span class="logo" style="font-size: 24px" *ngIf="currentUser">Welcome {{ currentUser }}</span>
+  <br>
+  <div class="row rowConnected">
+    <div class="col colConnected">
+      <div class="card">
+        <div class="card-content">
+          <div>
+            <input type="text" [(ngModel)]="searchContent" placeholder="Enter username to connect...">
+            <ul>
+              <li *ngFor="let user of userNames | filter:searchContent:currentUser"
+                style="display: flex; align-items: center">
+                <img src="{{ imgSrc }}"
+                  style="width: 50px; height: 50px; border-radius: 50%; flex: 2;justify-content: flex-start;">
+                <span style="flex: 3; justify-content: center; padding: 10px;">{{ user }}</span>
+                <span style="flex: 1"></span>
+                <button class="submitBtn btn waves-effect waves-light" *ngIf="alreadyRequested(user)"
+                  (click)="sendRequest(user)" [(disabled)]="disable"
+                  style="flex: 4; justify-content: flex-end">Request</button>
+                <button class="submitBtn btn waves-effect waves-light" *ngIf="isRequested" (click)="acceptRequest(user)"
+                  style="flex: 4; justify-content: flex-end">Connect</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

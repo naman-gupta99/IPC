@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { PagesModule } from './pages/pages.module';
+import { AlexaService } from './pages/alexa.service';
+import { ConnectionService } from './pages/connection.service';
 
 @NgModule({
   declarations: [],
@@ -10,6 +12,7 @@ import { PagesModule } from './pages/pages.module';
     CommonModule,
     HomeRoutingModule,
     PagesModule
-  ]
+  ],
+  providers: [AlexaService, ConnectionService]
 })
 export class HomeModule { }

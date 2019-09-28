@@ -9,12 +9,12 @@ let roomIds = [];
 let newUserIds = [];
 
 const newUserHandler = x => {
-  NewUser.find({ userId: "gitter" + x.id }).then(newUser => {
-    if (newUser.length > 0) {
+  NewUser.findOne({ userId: "gitter" + x.id }).then(newUser => {
+    if (newUser != null) {
       const message =
         "You have not registered on InterPlatFormChat. Head to the link to register : " +
         config.app.frontendURL +
-        "/signup/gitter" +
+        "/home/signup/gitter" +
         x.id +
         " \nPlease do not share the url with anybody else.";
       const params = {
@@ -31,23 +31,34 @@ const newUserHandler = x => {
       });
       newUser
         .save()
-        .then(
-          user => console.log(user) // and send user link
-        )
+        .then(user => {
+          const message =
+            "You have not registered on InterPlatFormChat. Head to the link to register : " +
+            config.app.frontendURL +
+            "/home/signup/gitter" +
+            user.userId +
+            " \nPlease do not share the url with anybody else.";
+          const params = {
+            roomId: x.id
+          };
+          gitterWrite(message, params);
+        })
         .catch(err => console.log(err));
     }
   });
 };
 
 const newRoomHandler = x => {
-  User.find({ userId: "gitter" + x.id })
+  User.findOne({ userId: "gitter" + x.id })
     .then(user => {
-      if (user.length > 0) {
+      if (user != null) {
         if (newUserIds.includes(x.id)) {
           newUserIds.splice(newUserIds.indexOf(x.id), 1);
         }
-        roomIds.push(x.id);
-        gitterRead(x.id);
+        if (!roomIds.includes(x.id)) {
+          roomIds.push(x.id);
+          gitterRead(x.id);
+        }
       } else if (!newUserIds.includes(x.id)) {
         newUserIds.push(x.id);
         newUserHandler(x);
@@ -81,24 +92,23 @@ const gitterInit = () => {
           setTimeout(checkRoom, 10);
         } else {
           try {
-            JSON.parse(body);
+            body = JSON.parse(body);
+            if (firstResponse) {
+              body.forEach(x => {
+                newRoomHandler(x);
+              });
+              firstResponse = false;
+            } else {
+              body.forEach(x => {
+                if (!roomIds.includes(x.id)) {
+                  newRoomHandler(x);
+                }
+              });
+            }
+            setTimeout(checkRoom, 5);
           } catch (e) {
             setTimeout(checkRoom, 10);
           }
-          body = JSON.parse(body);
-          if (firstResponse) {
-            for (let x of body) {
-              newRoomHandler(x);
-            }
-            firstResponse = false;
-          } else {
-            for (let x of body) {
-              if (!roomIds.includes(x.id)) {
-                newRoomHandler(x);
-              }
-            }
-          }
-          setTimeout(checkRoom, 5);
         }
       }
     );

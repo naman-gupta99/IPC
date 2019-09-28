@@ -1,15 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ConnectedPageComponent } from './connected-page/connected-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ConnectPageComponent } from './connect-page/connect-page.component';
+import { FilterPipe } from './filter.pipe';
+import { AlexaSignUpPageComponent } from './alexa-signup-page/alexa-signup-page.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AlexaConnectPageComponent } from './alexa-connect-page/alexa-connect-page.component';
 
 @NgModule({
-  declarations: [ConnectedPageComponent, SignupPageComponent],
+  declarations: [
+    ConnectedPageComponent,
+    SignupPageComponent,
+    ConnectPageComponent,
+    FilterPipe,
+    AlexaSignUpPageComponent,
+    DashboardComponent,
+    AlexaConnectPageComponent
+  ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule,
   ],
-  exports: [ConnectedPageComponent, SignupPageComponent]
+  exports: [ConnectedPageComponent, SignupPageComponent, ConnectPageComponent]
 })
 export class PagesModule { }

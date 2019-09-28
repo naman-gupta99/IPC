@@ -1,0 +1,39 @@
+<div class="signupPageContainer">
+  <div class="signupContentContainer">
+    <span class="logo signupLogo">InterPlatformChat</span>
+    <div class="row rowSignup">
+      <div class="col colSignup">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              <h4>Register</h4>
+            </span>
+            <div class="avatar-upload">
+              <div class="avatar-edit">
+                <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" (change)="onImageUploaded($event)">
+                <label for="imageUpload"><i class="material-icons addIcon">add</i></label>
+              </div>
+              <img [src]="imageUrl" class="avatar-preview" id="imagePreview">
+            </div>
+            <div>
+              <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" autocomplete="off">
+                <div>
+                  <input placeholder="Enter your Username" id="username" formControlName="username" type="text"
+                    class="validate usernameTextbox">
+                  <span
+                    *ngIf="!signUpForm.get('username').valid && signUpForm.get('username').touched && !signUpForm.get('username').pending && signUpForm.get('username').value.length !== 0">
+                    This Username is not available!</span>
+                </div>
+                <div class="submitDiv">
+                  <button class="submitBtn btn waves-effect waves-light" type="submit" name="action"
+                    [disabled]="!signUpForm.valid">SUBMIT
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { AuthService } from '../../../auth/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { PagesService } from '../pages.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup-page',
@@ -14,26 +16,34 @@ export class SignupPageComponent implements OnInit {
   forbiddenUsernames = [];
   userNameValid = false;
   currentUserName: string;
-  constructor(private authService: AuthService) { }
+  id: string;
+  constructor(private http: HttpClient, private route: ActivatedRoute, private pagesService: PagesService) { }
 
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id');
     this.signUpForm = new FormGroup({
       'username': new FormControl(null, [Validators.required, Validators.maxLength(20)], this.validateUsername.bind(this))
     });
+    if (!this.pagesService.usernames) {
+      this.pagesService.getUsernames().subscribe(responseData => {
+        for (const i of responseData.data) {
+          this.forbiddenUsernames.push(i.username.toLowerCase());
+          this.pagesService.usernames = this.forbiddenUsernames;
+        }
+      });
+    }
   }
 
   validateUsername(control: FormControl): Promise<any> | Observable<any> {
     const promise = new Promise<any>((resolve) => {
       setTimeout(() => {
-        // call server and query for entered username in database
-        this.forbiddenUsernames = this.authService.getUsernames();
-        this.currentUserName = control.value;
-        if (this.forbiddenUsernames.indexOf(control.value) !== -1) {
+        this.currentUserName = control.value.toLowerCase();
+        if (this.forbiddenUsernames.indexOf(this.currentUserName) !== -1) {
           resolve({ 'forbidden': true });
         } else {
           resolve(null);
         }
-      }, 1500);
+      }, 1000);
     });
     return promise;
   }
@@ -47,6 +57,8 @@ export class SignupPageComponent implements OnInit {
   }
   onSubmit() {
     this.signUpForm.reset();
-    this.authService.addUsername(this.currentUserName);
+    this.pagesService.usernames.push(this.currentUserName.toLowerCase());
+    this.forbiddenUsernames.push(this.currentUserName.toLowerCase());
+    this.pagesService.getNewUserObject(this.id, this.currentUserName.toLowerCase(), this.imageUrl);
   }
 }
