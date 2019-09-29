@@ -1,6 +1,8 @@
 import { dialogflow, BrowseCarousel, BrowseCarouselItem } from "actions-on-google";
 import User from "../models/User";
 import config from "../../config";
+import GAssistantMessageQueue from "../models/GAssistantMessageQueue";
+import messageHandler from "../message-handler";
 
 const app = dialogflow();
 
@@ -54,7 +56,7 @@ app.intent("Connect Intent", conv => {
     });
 });
 
-app.intent("Message Intent", (conv, message) => {
+app.intent("Message Intent", (conv, { message }) => {
   return User.findOne({ userId: conv.user.access.token })
     .then(user => {
       if (user.connection != "NONE") {
