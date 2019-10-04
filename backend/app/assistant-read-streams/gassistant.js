@@ -1,4 +1,4 @@
-import { dialogflow, BrowseCarousel, BrowseCarouselItem } from "actions-on-google";
+import { dialogflow, BasicCard, Button } from "actions-on-google";
 import User from "../models/User";
 import config from "../../config";
 import GAssistantMessageQueue from "../models/GAssistantMessageQueue";
@@ -42,14 +42,16 @@ app.intent("Connect Intent", conv => {
           "You are connected to " +
           user.connection +
           " Disconnect before connecting to someone else ");
-      else
-        conv.ask(new BrowseCarousel({
-          items: [new BrowseCarouselItem({
-            title: "Go To Dashboard",
-            description: "Click on this link to connect to someone",
+      else {
+        conv.ask("You are not connected to anyone.")
+        conv.ask(new BasicCard({
+          text: "Click on the following button to connect with someone",
+          buttons: new Button({
+            title: "Connect",
             url: config.app.frontendURL + "/dashboard/" + user.userId
-          })]
+          })
         }));
+      }
     })
     .catch(err => {
       console.log("Google Assistant function error : " + err);
@@ -63,12 +65,13 @@ app.intent("Message Intent", (conv, { message }) => {
         messageHandler(user.connection, message.toLowerCase());
         conv.ask("Your message has been sent");
       } else {
-        conv.ask(new BrowseCarousel({
-          items: [new BrowseCarouselItem({
-            title: "Go To Dashboard",
-            description: "Click on this link to connect to someone",
+        conv.ask("You are not connected to anyone.")
+        conv.ask(new BasicCard({
+          text: "Click on the following button to connect with someone",
+          buttons: new Button({
+            title: "Connect",
             url: config.app.frontendURL + "/dashboard/" + user.userId
-          })]
+          })
         }));
       }
     })
