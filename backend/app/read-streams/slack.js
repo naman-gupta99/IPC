@@ -7,11 +7,13 @@ const slackRead = (data) => {
    const message = data.text;
    const userId = "slack" + data.channel;
    
-    User.find({ "userId": userId }, { "connection": 1 })
-                            .then(userConnection => {
-                                const recieverUsername = userConnection[0].get('connection');
-                                messageHandler(recieverUsername, message);
-                            });
+    User.findOne({ "userId": userId }, { "connection": 1 })
+                            .then(user => {
+                            	if(user) {
+                            		const recieverUsername = userConnection[0].connection;
+                                   messageHandler(recieverUsername, message);
+                               }
+                            }).catch(err => console.log(err));
 
 }
 

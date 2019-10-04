@@ -1,0 +1,128 @@
+.signupPageContainer {
+  background-color: #1de9b6;
+}
+
+.signupContentContainer {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.rowSignup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.colSignup {
+  margin-left: 0px !important;
+}
+
+.card-content {
+  text-align: center;
+}
+
+.avatar-upload {
+  position: relative;
+  max-width: 205px;
+  margin: 50px auto;
+
+  .avatar-edit {
+    position: absolute;
+    right: 12px;
+    z-index: 1;
+    top: 10px;
+
+    input {
+      display: none;
+
+      +label {
+        display: inline-block;
+        width: 34px;
+        height: 34px;
+        margin-bottom: 0;
+        border-radius: 100%;
+        background: #FFFFFF;
+        border: 1px solid transparent;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+        color: #1de9b6;
+        cursor: pointer;
+        font-weight: normal;
+        transition: all .2s ease-in-out;
+
+        &:hover {
+          background: #1de9b6;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .avatar-preview {
+    width: 192px;
+    height: 192px;
+    position: relative;
+    border-radius: 100%;
+    border: 6px solid #35ffcd;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+
+    >div {
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+}
+
+.addIcon {
+  margin-top: 4px;
+}
+
+.usernameTextbox {
+  font-size: 100px;
+}
+
+.submitDiv {
+  width: inherit;
+  margin-top: 10px;
+}
+
+.submitBtn {
+  width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  .signupLogo {
+    font-size: 10vw;
+  }
+
+  .colSignup {
+    width: 100vw;
+  }
+}
+
+@media only screen and (min-width:600px) {
+  .signupLogo {
+    font-size: 7vw;
+  }
+
+  .colSignup {
+    width: 60vw;
+  }
+}
+
+@media only screen and (min-width:992px) {
+  .signupLogo {
+    font-size: 5vw;
+  }
+
+  .colSignup {
+    width: 30vw;
+  }
+}
