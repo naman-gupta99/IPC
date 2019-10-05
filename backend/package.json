@@ -38,7 +38,7 @@
     "swagger-jsdoc": "^3.2.9",
     "winston": "^3.1.0",
     "winston-daily-rotate-file": "^3.5.1",
-    "snyk": "^1.230.4"
+    "snyk": "^1.231.0"
   },
   "devDependencies": {
     "babel-preset-env": "^1.7.0",
