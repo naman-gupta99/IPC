@@ -5,22 +5,22 @@ ignore: {}
 patch:
   SNYK-JS-HTTPSPROXYAGENT-469131:
     - actions-on-google > googleapis > google-auth-library > https-proxy-agent:
-        patched: '2019-10-04T08:33:54.090Z'
+        patched: '2019-10-02T17:05:00.823Z'
     - actions-on-google > google-auth-library > gtoken > gaxios > https-proxy-agent:
-        patched: '2019-10-04T08:33:54.090Z'
+        patched: '2019-10-02T17:05:00.823Z'
     - actions-on-google > googleapis > google-auth-library > gaxios > https-proxy-agent:
-        patched: '2019-10-04T08:33:54.090Z'
+        patched: '2019-10-02T17:05:00.823Z'
     - actions-on-google > googleapis > googleapis-common > gaxios > https-proxy-agent:
-        patched: '2019-10-04T08:33:54.090Z'
+        patched: '2019-10-02T17:05:00.823Z'
     - actions-on-google > googleapis > googleapis-common > google-auth-library > https-proxy-agent:
-        patched: '2019-10-04T08:33:54.090Z'
+        patched: '2019-10-02T17:05:00.823Z'
     - actions-on-google > googleapis > google-auth-library > gtoken > gaxios > https-proxy-agent:
-        patched: '2019-10-04T08:33:54.090Z'
+        patched: '2019-10-02T17:05:00.823Z'
     - actions-on-google > googleapis > google-auth-library > gcp-metadata > gaxios > https-proxy-agent:
-        patched: '2019-10-04T08:33:54.090Z'
+        patched: '2019-10-02T17:05:00.823Z'
     - actions-on-google > googleapis > googleapis-common > google-auth-library > gaxios > https-proxy-agent:
-        patched: '2019-10-04T08:33:54.090Z'
+        patched: '2019-10-02T17:05:00.823Z'
     - actions-on-google > googleapis > googleapis-common > google-auth-library > gtoken > gaxios > https-proxy-agent:
-        patched: '2019-10-04T08:33:54.090Z'
+        patched: '2019-10-02T17:05:00.823Z'
     - actions-on-google > googleapis > googleapis-common > google-auth-library > gcp-metadata > gaxios > https-proxy-agent:
-        patched: '2019-10-04T08:33:54.090Z'
+        patched: '2019-10-02T17:05:00.823Z'
