@@ -5,6 +5,8 @@ import { User } from './user.model';
 import { map } from 'rxjs/operators';
 import { Subject, Observable, Observer } from 'rxjs';
 
+import { config } from '../../../../config';
+
 @Injectable()
 export class PagesService {
     user: User;
@@ -25,7 +27,7 @@ export class PagesService {
                 platform: string,
                 params: Object
             }
-        }>('http://localhost:8000/newUser/' + id)
+        }>(config.backendUrl + '/newUser/' + id)
             .pipe(map((newUser) => {
                 return {
                     userId: newUser.data.userId,
@@ -46,7 +48,7 @@ export class PagesService {
     }
 
     postUser() {
-        this.http.post('http://localhost:8000/user/', this.user)
+        this.http.post(config.backendUrl + '/user/', this.user)
             .subscribe(responseData => {
                 console.log(responseData);
                 this.deleteNewUser(this.user.userId);
@@ -57,18 +59,18 @@ export class PagesService {
     }
 
     deleteNewUser(id: string) {
-        this.http.delete('http://localhost:8000/newUser/' + id)
+        this.http.delete(config.backendUrl + '/newUser/' + id)
             .subscribe(responseData => {
                 console.log(responseData);
             });
     }
 
     getUser(userId: string) {
-        return this.http.get<{ data: User }>('http://localhost:8000/user/userId/' + userId);
+        return this.http.get<{ data: User }>(config.backendUrl + '/user/userId/' + userId);
     }
 
     getUserByUsername(userName: string) {
-        return this.http.get<{ data: User }>('http://localhost:8000/user/username/' + userName);
+        return this.http.get<{ data: User }>(config.backendUrl + '/user/username/' + userName);
     }
 
     getUsernames() {
@@ -79,16 +81,16 @@ export class PagesService {
             data: [{
                 username: string,
             }]
-        }>('http://localhost:8000/user/usernames');
+        }>(config.backendUrl + '/user/usernames');
     }
 
     connectToUser(outUsername: string) {
-        return this.http.post('http://localhost:8000/user/connect', { outUsername: outUsername, inUsername: this.user.username });
+        return this.http.post(config.backendUrl + '/user/connect', { outUsername: outUsername, inUsername: this.user.username });
     }
 
     disconnectUser() {
         this.http.post(
-            'http://localhost:8000/user/disconnect',
+            config.backendUrl + '/user/disconnect',
             {
                 username1: this.user.username,
                 username2: this.user.connection
