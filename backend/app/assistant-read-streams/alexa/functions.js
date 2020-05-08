@@ -44,7 +44,7 @@ export const ConnectionGetter = userId => {
           });
         } else if (user != null) {
           const text =
-            "You are not connected to anyone. You can say show connection requests to accept a connection request.";
+            "You are not connected to anyone. Say Connect to connect with someone.";
           resolve({
             speechText: text,
             cardContent: text
