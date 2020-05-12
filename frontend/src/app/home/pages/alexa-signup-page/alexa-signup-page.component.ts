@@ -72,3 +72,4 @@ export class AlexaSignUpPageComponent implements OnInit {
         this.alexaService.postUser(this.currentUserName, this.imageUrl);
     }
 }
+
