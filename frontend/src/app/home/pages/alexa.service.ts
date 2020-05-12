@@ -4,8 +4,6 @@ import { PagesService } from './pages.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import { config } from '../../../../config';
-
 @Injectable()
 export class AlexaService {
     user: User;
@@ -27,7 +25,7 @@ export class AlexaService {
             },
             profilePicture: imageUrl
         };
-        this.http.post(config.backendUrl + '/user/', user)
+        this.http.post('http://localhost:8000/user/', user)
             .subscribe(response => {
                 window.open(this.redirectUri + '?state=' + this.state + '&code=' + this.code, '_self');
             }, err => {
