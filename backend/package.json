@@ -6,9 +6,7 @@
   "scripts": {
     "server": "nodemon app.js",
     "server_dev": "SET NODE_ENV=dev&& npm run server",
-    "server_prod": "SET NODE_ENV=prod&& npm run server",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "server_prod": "SET NODE_ENV=prod&& npm run server"
   },
   "author": "TheMaroonKnight",
   "license": "MIT",
@@ -37,12 +35,10 @@
     "socket.io": "^2.3.0",
     "swagger-jsdoc": "^3.2.9",
     "winston": "^3.1.0",
-    "winston-daily-rotate-file": "^3.5.1",
-    "snyk": "^1.316.1"
+    "winston-daily-rotate-file": "^3.5.1"
   },
   "devDependencies": {
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0"
-  },
-  "snyk": true
+  }
 }
