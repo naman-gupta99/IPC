@@ -7,7 +7,7 @@
     "start": "node app.js",
     "server": "nodemon app.js",
     "server_dev": "SET NODE_ENV=dev&& npm run server",
-    "server_prod": "SET NODE_ENV=prod&& npm run server"
+    "server_prod": "SET NODE_ENV=production&& npm run server"
   },
   "author": "TheMaroonKnight",
   "license": "MIT",
